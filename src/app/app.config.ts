@@ -1,3 +1,8 @@
+/**
+ * Diz ao angular como ele vai renderizar os meus componentes
+ * Faço a renderização das paginas, ou seja, no app.routes.ts crio as rotas que esta pagina pode aceder
+ * e aqui digo como é que elas podem ser acedidas
+ */
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
