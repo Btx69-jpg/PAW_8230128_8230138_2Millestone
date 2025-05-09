@@ -10,6 +10,7 @@ import { DadosUserComponent } from './dados-user/dados-user.component';
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
+
 export class UserComponent {
 
 }

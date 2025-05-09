@@ -23,11 +23,6 @@
     transform: translateY(-1px);
 }
   
-.content {
-    margin-left: 250px; /* Ajuste conforme o tamanho da navbar */
-    padding: 20px;
-}
-  
 @media (max-width: 768px) {
     .content {
       margin-left: 0;
