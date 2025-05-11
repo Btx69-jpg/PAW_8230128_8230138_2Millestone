@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,19 +11,20 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class NavBarComponent {
   //Depois com as rotas feitas, alterar
+  //Meter o userId, depois
   links = [
     { 
-      path: '/perfil/user', 
+      path: '/perfil/user/:userId', 
       title: 'Meu Perfil',
       icon: 'bi-person-badge-fill' 
     },
     { 
-      path: '/perfil/admin/historicOrder', 
+      path: '/perfil/user/:userId/historicOrder', 
       title: 'Histórico de Encomendas',
       icon: 'bi-clock-history' 
     },
     { 
-      path: '/perfil/admin/manageAddresses', 
+      path: '/perfil/user/:userId/manageAddresses', 
       title: 'Gerir Moradas',
       icon: 'bi-geo-alt-fill' 
     },
