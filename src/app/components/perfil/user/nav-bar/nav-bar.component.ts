@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-  userId: string = '';
+  @Input() userId: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -18,27 +18,14 @@ export class NavBarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // A) Encontra o segmento de rota que carrega o userId
-    let current = this.router.routerState.root;
-    while (current.firstChild) {
-      current = current.firstChild;
-    }
-    
-    current.paramMap.subscribe(params => {
-      const id = params.get('userId');
-      if (id) {
-        this.userId = id;
-      } else {
-        console.error('userId não encontrado na rota atual');
-      }
-    });
+  
   }
 
   userPage() {
     this.router.navigate(['/perfil', 'user', this.userId]);
   }
 
-  historicOrderPage() {
+  historicOrderPage() {    
     this.router.navigate(['/perfil', 'user', this.userId, 'historicOrder']);
   }
 

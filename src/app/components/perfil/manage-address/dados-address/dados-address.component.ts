@@ -6,7 +6,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
-  standalone: true,
+
   selector: 'app-dados-address',
   imports: [CommonModule, RouterModule, HttpClientModule],
   templateUrl: './dados-address.component.html',
@@ -16,11 +16,14 @@ export class DadosAddressComponent implements OnInit{
   userId: string = '';
   addresses: AddressOrder[] = [];
 
-  constructor(public addressOrderRest: AddresOrderService, private route: ActivatedRoute, private router: Router) {
-  }
+  constructor(public addressOrderRest: AddresOrderService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.params['userId'];
+    this.carregarOrders();
+  }
+
+  carregarOrders() {
     this.addressOrderRest.getAddressesOrder(this.userId).subscribe({
         next: (addresses: AddressOrder[]) => {
           this.addresses = addresses;
@@ -43,6 +46,7 @@ export class DadosAddressComponent implements OnInit{
   }
 
   editAddress(addressId: string) {
+    console.log('Edit clicked with ID:', addressId);
     this.router.navigate(['edit', addressId], { relativeTo: this.route });
   }
 }

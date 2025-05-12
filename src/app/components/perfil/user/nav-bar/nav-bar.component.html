@@ -9,21 +9,21 @@
   
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a (click)="userPage()" class="nav-link">
+      <a [routerLink]="['/perfil', 'user', userId]" class="nav-link">
         <i class="bi bi-person-badge-fill"></i>
         <span>Meu Perfil</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a (click)="historicOrderPage()" class="nav-link">
+      <a [routerLink]="['/perfil', 'user', userId, 'historicOrder']" class="nav-link">
         <i class="bi bi-clock-history"></i>
         <span>Hisotrico de Encomendas</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a (click)="manageAddressPage()" class="nav-link ">
+      <a [routerLink]="['/perfil', 'user', this.userId, 'manageAddresses']" class="nav-link ">
         <i class="bi bi-geo-alt-fill"></i>
         <span>Gestão das Moradas</span>
       </a>

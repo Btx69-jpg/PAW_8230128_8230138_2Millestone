@@ -1,6 +1,6 @@
 <div class="layout">
-    <app-nav-bar></app-nav-bar>
+    <app-nav-bar [userId]="user._id"></app-nav-bar>
     <div class="content-wrapper">
-      <app-dados-user></app-dados-user>
+        <app-dados-user [user]="user"></app-dados-user>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AddressOrder } from '../../model/order/address-order';
@@ -8,7 +8,8 @@ const endPoint = `http://localhost:3000/api/v1/user`;
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
-  })
+  }),
+  observe: 'response' as const
 };
 
 @Injectable({
@@ -30,7 +31,7 @@ export class AddresOrderService {
    * 
    * !Ver se está bem (Testar)
    */
-  postAddressOrder(userId: String, newAddress: AddressOrder): Observable<AddressOrder> {
+  postAddressOrder(userId: String, newAddress: AddressOrder): Observable<HttpResponse<AddressOrder>> {
     return this.http.post<AddressOrder>(`${endPoint}/${userId}`, newAddress, httpOptions);
   }
 
@@ -44,7 +45,7 @@ export class AddresOrderService {
   /**
    * * Permite atualizar os dados de uma morada do utilizador
    */
-  putAddressOrder(userId: String, addressOrderId: String, updateAddress: AddressOrder): Observable<AddressOrder> {
+  putAddressOrder(userId: String, addressOrderId: String, updateAddress: AddressOrder): Observable<HttpResponse<AddressOrder>> {
     return this.http.put<AddressOrder>(`${endPoint}/${userId}/addresses/${addressOrderId}`, 
                                         updateAddress, 
                                         httpOptions);

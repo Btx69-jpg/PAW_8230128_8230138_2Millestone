@@ -1,20 +1,17 @@
 export class Address {
-    _id: String;
-    nif?: number;
     street: string;
     postal_code: string;
     city: string;
 
-    constructor(_id: string, name: string, street: string, postal_code: string, city: string) {
-        this._id = _id;
+    constructor(street: string, postal_code: string, city: string) {
         this.street = street;
         this.postal_code = postal_code;
         this.city = city;
 
         //Validações
-        this.validateStreet();
-        this.validateCity();
-        this.validatePostalCode();
+        //this.validateStreet();
+        //this.validateCity();
+        //this.validatePostalCode();
     }
 
     private validateStreet() {

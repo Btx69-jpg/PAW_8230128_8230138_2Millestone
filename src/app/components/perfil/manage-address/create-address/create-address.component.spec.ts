@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditAddressPageComponent } from './edit-address-page.component';
+import { CreateAddressComponent } from './create-address.component';
 
-describe('EditAddressPageComponent', () => {
-  let component: EditAddressPageComponent;
-  let fixture: ComponentFixture<EditAddressPageComponent>;
+describe('CreateAddressComponent', () => {
+  let component: CreateAddressComponent;
+  let fixture: ComponentFixture<CreateAddressComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditAddressPageComponent]
+      imports: [CreateAddressComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditAddressPageComponent);
+    fixture = TestBed.createComponent(CreateAddressComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

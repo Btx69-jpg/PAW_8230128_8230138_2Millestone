@@ -1,11 +1,8 @@
 <div class="layout">
-    <app-nav-bar></app-nav-bar>
+    <app-nav-bar [userId]="userId"></app-nav-bar>
     <div class="content-wrapper">
         <div class="mb-4 d-flex gap-2">
-            <button
-                class="btn btn-primary"
-                [routerLink]="['add']"
-                [relativeTo]="route">
+            <button class="btn btn-primary" (click)="addAddress()">
                 <i class="bi bi-plus-lg me-1"></i>
                 Adicionar Morada
             </button>
