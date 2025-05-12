@@ -22,6 +22,6 @@ export class ManageAddressComponent {
     }
   
     addAddress() {
-      this.router.navigate(['add'], { relativeTo: this.route })
+      this.router.navigate(['adicionar'], { relativeTo: this.route })
     }
 }

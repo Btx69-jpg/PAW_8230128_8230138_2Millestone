@@ -9,9 +9,9 @@ export class Address {
         this.city = city;
 
         //Validações
-        //this.validateStreet();
-        //this.validateCity();
-        //this.validatePostalCode();
+        this.validateStreet();
+        this.validateCity();
+        this.validatePostalCode();
     }
 
     private validateStreet() {
@@ -21,9 +21,9 @@ export class Address {
     }
 
     private validatePostalCode() {
-        const regexPostalCode = /^\d{4}-\d{3}$/;
+        const regexPostalCode = /^[0-9]{4}-[0-9]{3}$/;
 
-        if (!regexPostalCode.test(this.postal_code) || this.postal_code.length !== 9) {
+        if (!regexPostalCode.test(this.postal_code) || this.postal_code.length !== 8) {
             throw new Error('Formato inválido para o código postal. Deve ser “1234-567”');
         }
     }

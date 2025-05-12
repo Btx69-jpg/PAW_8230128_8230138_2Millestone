@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpResponse  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AddressOrder } from '../../model/order/address-order';
+import { newAddressOrder } from '../../model/order/newAddressOrder';
 
 const endPoint = `http://localhost:3000/api/v1/user`;
 
@@ -31,8 +32,8 @@ export class AddresOrderService {
    * 
    * !Ver se está bem (Testar)
    */
-  postAddressOrder(userId: String, newAddress: AddressOrder): Observable<HttpResponse<AddressOrder>> {
-    return this.http.post<AddressOrder>(`${endPoint}/${userId}`, newAddress, httpOptions);
+  postAddressOrder(userId: String, newAddress: newAddressOrder): Observable<HttpResponse<newAddressOrder>> {
+    return this.http.post<newAddressOrder>(`${endPoint}/${userId}`, newAddress, httpOptions);
   }
 
   /**

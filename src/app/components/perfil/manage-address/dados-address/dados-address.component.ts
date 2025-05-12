@@ -46,7 +46,6 @@ export class DadosAddressComponent implements OnInit{
   }
 
   editAddress(addressId: string) {
-    console.log('Edit clicked with ID:', addressId);
-    this.router.navigate(['edit', addressId], { relativeTo: this.route });
+    this.router.navigate(['/perfil/user', this.userId, 'manageAddresses', 'edit', addressId]);
   }
 }

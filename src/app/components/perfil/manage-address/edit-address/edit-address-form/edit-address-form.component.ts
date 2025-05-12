@@ -38,7 +38,7 @@ export class EditAddressFormComponent {
     return this.router;
   }
 
-  //Chamar metodo para atualizar
+  //Metodo para atualizar a morada
   update(formValues: any) {
     console.log("FormValue: ", formValues);
       const nif = formValues.nif;
@@ -46,9 +46,7 @@ export class EditAddressFormComponent {
       const postal_code = formValues['address.postal_code'];
       const city  = formValues['address.city'];
       const address = new Address(street, postal_code, city);
-    console.log(this.addressId)
 
-      // 2) Instancia o AddressOrder e popula-o
       const updatedAddress = new AddressOrder(this.addressId, address, nif);
 
       this.addressService.putAddressOrder(this.userId, this.addressId, updatedAddress).subscribe({
