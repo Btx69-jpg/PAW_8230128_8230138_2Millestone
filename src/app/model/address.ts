@@ -1,25 +1,39 @@
-import { AddressOrder } from './order/address-order';
-
 export class Address {
     _id: String;
-    address: AddressOrder;
     nif?: number;
+    street: string;
+    postal_code: string;
+    city: string;
 
-
-    constructor(_id: string, address: AddressOrder, nif?: number) {
+    constructor(_id: string, name: string, street: string, postal_code: string, city: string) {
         this._id = _id;
-        this.address = address;
-        this.nif = nif;
+        this.street = street;
+        this.postal_code = postal_code;
+        this.city = city;
 
-        //Validacoes
-        this.validateNif();
+        //Validações
+        this.validateStreet();
+        this.validateCity();
+        this.validatePostalCode();
     }
 
-    private validateNif() {
-        if (typeof this.nif === 'number') {
-            if (this.nif < 100000000 || this.nif > 999999999) {
-                throw new Error('O NIF tem de ser um número entre 100000000 e 999999999');
-            }
+    private validateStreet() {
+        if (this.street.length > 250) {
+            throw Error("A rua não pode ter mais de 250");
+        }
+    }
+
+    private validatePostalCode() {
+        const regexPostalCode = /^\d{4}-\d{3}$/;
+
+        if (!regexPostalCode.test(this.postal_code) || this.postal_code.length !== 9) {
+            throw new Error('Formato inválido para o código postal. Deve ser “1234-567”');
+        }
+    }
+
+    private validateCity() {
+        if (this.street.length > 100) {
+            throw Error("A rua não pode ter mais de 250");
         }
     }
 }

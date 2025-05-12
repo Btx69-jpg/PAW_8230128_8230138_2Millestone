@@ -1,0 +1,24 @@
+<div class="content">
+    <div class="row bg-white p-4 rounded shadow mb-4" *ngIf="addresses?.length">
+        <div class="col-12 mt-3" *ngFor="let addr of addresses; let i = index">
+            <h5>Morada {{ i + 1 }}</h5>
+            <div class="btn-group">
+                <button class="btn btn-outline-primary btn-sm me-2" (click)="editAddress(addr._id)">
+                    <i class="bi bi-pencil me-1"></i>
+                    Editar
+                </button>
+
+                <button class="btn btn-outline-danger btn-sm" (click)="deleteAddress(addr._id)">
+                    <i class="bi bi-trash me-1"></i>
+                    Remover
+                </button>
+            </div>
+            <div class="ms-3">
+                <p *ngIf="addr.nif"><strong>NIF:</strong> {{ addr.nif }}</p>
+                <p><strong>Rua:</strong> {{ addr.address.street }}</p>
+                <p><strong>Código Postal:</strong> {{ addr.address.postal_code }}</p>
+                <p><strong>Cidade:</strong> {{ addr.address.city }}</p>
+            </div>
+        </div>
+    </div>
+</div>

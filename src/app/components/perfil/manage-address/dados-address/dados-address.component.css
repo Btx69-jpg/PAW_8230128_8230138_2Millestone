@@ -1,0 +1,38 @@
+.content {
+    padding: 20px;
+}
+
+.row {
+    margin: 0;
+}
+
+.ms-3 {
+    margin-left: 1rem;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.rounded {
+    border-radius: 0.5rem;
+}
+
+.shadow {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+h5 {
+    color: #2c3e50;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+}
+
+p {
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+}

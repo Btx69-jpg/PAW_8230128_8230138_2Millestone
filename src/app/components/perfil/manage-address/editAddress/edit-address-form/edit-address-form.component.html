@@ -1,0 +1,31 @@
+<div class="container mt-4">
+    <h3 class="mb-4">Editar Morada</h3>
+    <form [formGroup]="addressForm" (ngSubmit)="save()">
+        <div class="mb-3">
+            <label for="nif" class="form-label">NIF</label>
+            <input type="text" id="nif" class="form-control" formControlName="nif">
+        </div>
+
+        <div class="mb-3">
+            <label for="street" class="form-label">Rua</label>
+            <input type="text" id="street" class="form-control" formControlName="street">
+        </div>
+
+        <div class="mb-3">
+            <label for="postal_code" class="form-label">Código Postal</label>
+            <input type="text" id="postal_code" class="form-control" formControlName="postal_code">
+        </div>
+
+        <div class="mb-3">
+            <label for="city" class="form-label">Cidade</label>
+            <input type="text" id="city" class="form-control" formControlName="city">
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="addressForm.invalid">
+            <i class="bi bi-check-circle me-1"></i> Guardar
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="router.navigate(['../../'], { relativeTo: route })">
+            Cancelar
+        </button>
+    </form>
+</div>

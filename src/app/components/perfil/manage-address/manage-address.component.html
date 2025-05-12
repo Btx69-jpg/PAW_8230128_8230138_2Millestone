@@ -1,0 +1,15 @@
+<div class="layout">
+    <app-nav-bar></app-nav-bar>
+    <div class="content-wrapper">
+        <div class="mb-4 d-flex gap-2">
+            <button
+                class="btn btn-primary"
+                [routerLink]="['add']"
+                [relativeTo]="route">
+                <i class="bi bi-plus-lg me-1"></i>
+                Adicionar Morada
+            </button>
+        </div>
+        <app-dados-address></app-dados-address>
+    </div>
+</div>

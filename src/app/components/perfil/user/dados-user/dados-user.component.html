@@ -30,15 +30,5 @@
             <p><strong>Número Telefónico:</strong> {{ user.perfil.phoneNumber }}</p>
         </div>
 
-        <ng-container *ngIf="user.addresses.length">
-            <div class="col-12 mt-3" *ngFor="let endereco of user.addresses; let i = index">
-                <h5>Morada {{ i + 1 }}</h5>
-                <div class="ms-3">
-                    <p><strong>Rua:</strong> {{ endereco.street }}</p>
-                    <p><strong>Código Postal:</strong> {{ endereco.postal_code }}</p>
-                    <p><strong>Cidade:</strong> {{ endereco.city }}</p>
-                </div>
-            </div>
-        </ng-container>
     </div>
 </div>
