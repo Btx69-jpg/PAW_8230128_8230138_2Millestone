@@ -1,0 +1,13 @@
+.layout {
+    display: flex;
+}
+  
+app-nav-bar {
+    width: 250px;
+    flex-shrink: 0;
+}
+  
+.content-wrapper {
+    flex: 1;
+    padding: 20px;
+}

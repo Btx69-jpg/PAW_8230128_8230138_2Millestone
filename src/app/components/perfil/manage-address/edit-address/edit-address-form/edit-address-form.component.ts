@@ -16,7 +16,7 @@ import { Address } from '../../../../../model/address';
 })
 export class EditAddressFormComponent {
   @Input() addressOrder: AddressOrder = {
-     nif: undefined,
+    nif: undefined,
     address: { street: '', postal_code: '', city: '' }
   } as AddressOrder
 

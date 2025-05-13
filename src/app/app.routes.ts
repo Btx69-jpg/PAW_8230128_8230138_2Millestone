@@ -11,6 +11,7 @@ import { ManageAddressComponent } from './components/perfil/manage-address/manag
 import { AppComponent } from './app.component';
 import { EditAddressPageComponent } from './components/perfil/manage-address/edit-address/edit-address.component';
 import { CreateAddressComponent } from './components/perfil/manage-address/create-address/create-address.component';
+import { HistoricDadosComponent } from './components/perfil/historic-orders/historic-dados/historic-dados.component';
 
 /**
  * Isto é os routes que tinha no express
@@ -27,6 +28,10 @@ export const routes: Routes = [
     { 
         path: 'perfil/user/:userId/historicOrder', 
         component: HistoricOrdersComponent 
+    },
+        { 
+        path: 'perfil/user/:userId/historicOrder/:orderId', 
+        component: HistoricDadosComponent 
     },
     { 
         path: 'perfil/user/:userId/manageAddresses', 

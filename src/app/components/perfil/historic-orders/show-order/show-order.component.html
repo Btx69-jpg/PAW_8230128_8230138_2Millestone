@@ -1,0 +1,63 @@
+<div class="order-container" *ngIf="order">
+    <h2 class="order-header">Encomenda #{{ order._id }}</h2>
+
+    <div class="form-group">
+        <label>Data da encomenda:</label>
+        <p class="form-control-plaintext">{{ order.date }}</p>
+    </div>
+
+    <h4>Dados do Restaurante</h4>
+    <div class="form-group">
+        <label>Nome:</label>
+        <p class="form-control-plaintext">{{ order.restaurant.name }}</p>
+    </div>
+    <div class="form-group">
+        <label>Email:</label>
+        <p class="form-control-plaintext">{{ order.restaurant.email }}</p>
+    </div>
+    <div class="form-group">
+        <label>Telefone:</label>
+        <p class="form-control-plaintext">{{ order.restaurant.phoneNumber }}</p>
+    </div>
+
+    <h4>Endereço de Entrega</h4>
+    <div class="form-group">
+        <label>Morada:</label>
+        <p class="form-control-plaintext">
+        {{ order.addressOrder.address.street }},
+        {{ order.addressOrder.address.postal_code }},
+        {{ order.addressOrder.address.city }}
+        </p>
+    </div>
+
+    <div class="form-group" *ngIf="order.addressOrder.nif">
+        <label>NIF:</label>
+        <p class="form-control-plaintext">{{ order.addressOrder.nif }}</p>
+    </div>
+
+    <h4>Itens da Encomenda</h4>
+    <div *ngIf="order.itens.length > 0; else semPratos">
+        <div class="form-group" *ngFor="let item of order.itens">
+        <label>{{ item.item }}</label>
+        <p class="form-control-plaintext">
+            Porção: {{ item.portion }} | Quantidade: {{ item.quantity }} | Preço: {{ item.price.toFixed(2) }}€
+        </p>
+        </div>
+    </div>
+    <ng-template #semPratos>
+        <div class="form-group">
+        <p class="text-center">A encomenda não tem pratos</p>
+        </div>
+    </ng-template>
+
+    <div class="form-group">
+        <label>Total da entrega:</label>
+        <p class="form-control-plaintext">{{ order.price.toFixed(2) }}€</p>
+    </div>
+
+    <div class="d-grid gap-2">  
+        <button type="button" class="btn btn-secondary ms-2" (click)="getRouter().navigate(['../'], { relativeTo: getRoute() })">
+            Voltar
+        </button>
+    </div>
+</div>

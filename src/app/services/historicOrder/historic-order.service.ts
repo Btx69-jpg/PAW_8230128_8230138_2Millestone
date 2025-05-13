@@ -21,8 +21,8 @@ export class HistoricOrderService {
   /**
    * * Procura pelo historico de encomendas do utilizador
    * */
-  getHisotricOrder(userId: String): Observable<Order> {
-    return this.http.get<Order>(`${endPoint}/${userId}/historicOrder`);
+  getHistoricOrder(userId: String): Observable<Order[]> {
+    return this.http.get<Order[]>(`${endPoint}/${userId}/historicOrder`);
   }
 
   /**

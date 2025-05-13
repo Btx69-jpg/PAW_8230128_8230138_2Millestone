@@ -4,17 +4,21 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app.routes";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
+import { CreateAddressFormComponent } from "./components/perfil/manage-address/create-address/create-address-form/create-address-form.component";
+import { FormsModule } from "@angular/forms";
 
 
 @NgModule({
     declarations: [
         AppComponent,
+        CreateAddressFormComponent
     ], 
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        RouterModule
+        RouterModule,
+        FormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -33,7 +33,7 @@ export class AddresOrderService {
    * !Ver se está bem (Testar)
    */
   postAddressOrder(userId: String, newAddress: newAddressOrder): Observable<HttpResponse<newAddressOrder>> {
-    return this.http.post<newAddressOrder>(`${endPoint}/${userId}`, newAddress, httpOptions);
+    return this.http.post<newAddressOrder>(`${endPoint}/${userId}/addresses`, newAddress, httpOptions);
   }
 
   /**

@@ -1,0 +1,39 @@
+<!-- Pagina que lista as encomendas todas do ghsitorico-->
+<div class="container my-4">
+    <div class="col-12 col-md-10 col-lg-8 mx-auto">
+
+        <div *ngIf="historicOrder.length > 0; else noOrders">
+            <div class="row g-4 justify-content-center">
+                <div *ngFor="let order of historicOrder.slice().reverse()" class="col-12 col-md-6 col-lg-4">
+                    <div class="card dish-card h-100">
+                        <!--
+                        Arranjar forma de meter a foto do restaurante:
+
+                        <div *ngIf="!isRestaurantPriority">
+                            <img *ngIf="account.perfil.perfilPhoto; else noImage" [src]="account.perfil.perfilPhoto" class="card-img-top dish-image" alt="Foto do restaurante">
+                            <ng-template #noImage>
+                            <div class="dish-image bg-secondary d-flex align-items-center justify-content-center">
+                                <span class="text-white">Sem imagem</span>
+                            </div>
+                            </ng-template>
+                        </div>
+                        -->
+
+                        <div class="card-body">
+                            <h5 class="card-title">Nome do restaurante: {{ order.restaurant.name }}</h5>
+                            <h6>{{ order.itens.length }} items</h6>
+                            <h6>{{ order.date }}</h6>
+                            <h6>{{ order.status }}</h6>
+                            <!-- Chamar antes um metodo-->
+                            <button (click)="showOrder(order._id)">Ver Menu</button>
+                            <!-- <a [routerLink]="['/restaurants', account.name, 'orders', 'historic', order._id]" class="btn btn-outline-primary">Ver Menu</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #noOrders>
+            <p class="text-center">Ainda não possui encomendas</p>
+        </ng-template>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+<!-- historic-search.component.html -->
+<div class="col-12 col-md-10 col-lg-8 mx-auto mb-4">
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="filtrar()" class="row g-3 justify-content-center">
+
+        <!-- Se for perfil de Restaurante, mostra busca por cliente 
+        <div class="col-md-4" *ngIf="account.perfil.priority === 'Restaurant'; else restName">
+            <label for="cliente" class="form-label">Nome do Cliente:</label>
+            <input
+            type="text"
+            id="cliente"
+            class="form-control"
+            formControlName="cliente"
+            placeholder="Nome do Cliente"/>
+            <div *ngIf="form.get('cliente')?.invalid && form.get('cliente')?.touched">
+                O campo do cliente deve ter no máximo 100 caracteres e só pode ter letras e numeros
+            </div>
+        </div> 
+        -->
+        
+
+        <!-- Caso contrário, mostra busca por nome de Restaurante 
+         <ng-template #restName> 
+        -->
+       
+            <div class="col-md-4">
+                <label for="nameRest" class="form-label">Nome do Restaurante:</label>
+                <input
+                type="text"
+                id="nameRest"
+                class="form-control"
+                formControlName="nameRest"
+                placeholder="Nome do Restaurante"/>
+                <div *ngIf="form.get('nameRest')?.invalid && form.get('nameRest')?.touched">
+                    O campo do restaurante deve ter no máximo 100 caracteres e só pode ter letras e numeros
+                </div>
+            </div>
+        <!-- </ng-template> -->
+
+
+        <!-- Preço -->
+        <div class="col-md-4">
+            <label for="price" class="form-label">Preço:</label>
+            <input
+                type="number"
+                id="price"
+                class="form-control"
+                formControlName="price"
+                placeholder="Preço"
+                min="0"
+                step="0.01" />
+                <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched">
+                    O campo preço não pode ser negativo
+                </div>
+        </div>
+
+        <!-- Data início -->
+        <div class="col-md-4">
+            <label for="from" class="form-label">Da data:</label>
+            <input
+                type="date"
+                id="from"
+                class="form-control"
+                formControlName="from"
+                placeholder="Introduza uma data"
+                [min]="'2000-01-01'"
+                [max]="form.get('to')?.value"
+                />
+            <div *ngIf="form.get('from')?.invalid && form.get('from')?.touched">
+                O campo preço não pode ser negativo
+            </div>
+        </div>
+
+        <!-- Data fim -->
+        <div class="col-md-4">
+        <label for="to" class="form-label">Até data:</label>
+        <input
+            type="date"
+            id="to"
+            class="form-control"
+            formControlName="to"
+            placeholder="Introduza uma data"
+            [min]="form.get('from')?.value"/>
+        </div>
+
+        <div class="col-12 d-flex justify-content-center">
+            <a [routerLink]="['./']" [relativeTo]="getRoute()" [queryParams]="{}" class="btn btn-secondary me-2">
+                Clear
+            </a>
+            
+            <button type="submit" class="btn btn-primary" (click)="filtrar()">
+                Submeter
+            </button>
+        </div>
+    </form>
+</div>
