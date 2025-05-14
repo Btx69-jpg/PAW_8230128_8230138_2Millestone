@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Order } from '../../model/order/order';
 
@@ -28,8 +28,38 @@ export class HistoricOrderService {
   /**
    * * Procura pelo historico de encomendas do utilizador
    * */
-  getSearchHistoricOrder(userId: String): Observable<Order> {
-    return this.http.get<Order>(`${endPoint}/${userId}/historicOrder/search`);
+  getSearchHistoricOrder(userId: String, filters?: {
+      nameRest?: string;
+      price?: number;
+      dateFrom?: string;
+      dateTo?: string;
+      order?: 'nameAsc' | 'nameDesc' | 'priceAsc' | 'priceDesc' | 'dateAsc' | 'dateDesc';
+    }): Observable<Order[]> {
+
+    let params = new HttpParams();
+
+    if (filters) {
+      if (filters.nameRest) {
+        params = params.set('nameRest', filters.nameRest);
+      }
+      
+      if (filters.price !== undefined) {
+        params = params.set('price', filters.price.toString());
+      }
+      
+      if (filters.dateFrom) {
+        params = params.set('dateFrom', filters.dateFrom);
+      }
+      
+      if (filters.dateTo) {
+        params = params.set('dateTo', filters.dateTo);
+      }
+
+      if (filters.order) {
+        params = params.set('order', filters.order);
+      }
+    }
+    return this.http.get<Order[]>(`${endPoint}/${userId}/historicOrder/search`, { params });
   }
 
   /**

@@ -5,6 +5,7 @@ import { NavBarComponent } from '../user/nav-bar/nav-bar.component';
 import { ListaHistoricOrderComponent } from './lista-historic-order/lista-historic-order.component';
 import { HistoricOrderService } from '../../../services/historicOrder/historic-order.service';
 import { SearchOrderComponent } from './search-order/search-order.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-historic-orders',
@@ -22,14 +23,23 @@ export class HistoricOrdersComponent {
       this.userId = this.route.snapshot.params['userId'];
       this.carregarHistorico();
     }
+
+    atualizarHistorico(orders: Order[]) {
+      this.historicOrder = orders;
+    }
   
     carregarHistorico() {
       this.historicService.getHistoricOrder(this.userId).subscribe({
         next: (orders: Order[]) => {
           this.historicOrder = orders;
         },
-        error: (err) => {
-          console.error("Erro a carregar o utilizador", err);
+        error: (err: HttpErrorResponse) => {
+          if (err.status === 404) {
+            this.historicOrder = [];
+            console.log("Erro: O recurso não foi encontrado (404).", err.message);
+          } else {
+            console.error("Erro a carregar o utilizador", err);
+          }
         }
       });
     }

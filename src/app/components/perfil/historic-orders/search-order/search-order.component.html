@@ -55,41 +55,37 @@
 
         <!-- Data início -->
         <div class="col-md-4">
-            <label for="from" class="form-label">Da data:</label>
+            <label for="dateFrom" class="form-label">Da data:</label>
             <input
                 type="date"
-                id="from"
+                id="dateFrom"
                 class="form-control"
-                formControlName="from"
+                formControlName="dateFrom"
                 placeholder="Introduza uma data"
                 [min]="'2000-01-01'"
                 [max]="form.get('to')?.value"
                 />
             <div *ngIf="form.get('from')?.invalid && form.get('from')?.touched">
-                O campo preço não pode ser negativo
+                O campo da data está mal preenchido
             </div>
         </div>
 
         <!-- Data fim -->
         <div class="col-md-4">
-        <label for="to" class="form-label">Até data:</label>
+        <label for="dateTo" class="form-label">Até data:</label>
         <input
             type="date"
-            id="to"
+            id="dateTo"
             class="form-control"
-            formControlName="to"
+            formControlName="dateTo"
             placeholder="Introduza uma data"
-            [min]="form.get('from')?.value"/>
+            [min]="form.get('dateFrom')?.value"/>
         </div>
 
         <div class="col-12 d-flex justify-content-center">
-            <a [routerLink]="['./']" [relativeTo]="getRoute()" [queryParams]="{}" class="btn btn-secondary me-2">
-                Clear
-            </a>
+            <button class="btn btn-secondary me-2" (click)="limparFiltro()">Clear</button>
             
-            <button type="submit" class="btn btn-primary" (click)="filtrar()">
-                Submeter
-            </button>
+            <button type="submit" class="btn btn-primary" (click)="filtrar()">Submeter</button>
         </div>
     </form>
 </div>
