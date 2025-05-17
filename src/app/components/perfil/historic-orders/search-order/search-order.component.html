@@ -30,7 +30,7 @@
             class="form-control"
             formControlName="nameRest"
             placeholder="Nome do Restaurante"/>
-            <div *ngIf="form.get('nameRest')?.invalid && form.get('nameRest')?.touched">
+            <div *ngIf="form.get('nameRest')?.invalid && form.get('nameRest')?.touched" class="text-danger">
                 O campo do restaurante deve ter no máximo 100 caracteres e só pode ter letras e numeros
             </div>
         </div>
@@ -47,7 +47,7 @@
                 formControlName="price"
                 placeholder="Preço"
                 step="0.01" />
-                <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched">
+                <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched" class="text-danger">
                     O campo preço não pode ser negativo
                 </div>
         </div>
@@ -64,9 +64,6 @@
                 [min]="'2000-01-01'"
                 [max]="form.get('dateTo')?.value"
                 />
-            <div *ngIf="form.get('dateFrom')?.invalid && form.get('from')?.touched">
-                O campo da data está mal preenchido
-            </div>
         </div>
 
         <!-- Data fim -->

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../../model/perfil/user';
 import { Password } from '../../model/perfil/password'
+import { UpdateUserDados } from '../../model/perfil/Update/UpdateUserDados';
 
 const endPoint = 'http://localhost:3000/api/v1/user';
 
@@ -25,11 +26,18 @@ export class UserService {
     return this.http.get<User>(`${endPoint}/${userId}`);
   }
 
+   /**
+   * * Procura por utilizador especifico e retorna os campos editaveis do mesmo
+   * */
+  getUserEdit(userId: String): Observable<UpdateUserDados> {
+    return this.http.get<UpdateUserDados>(`${endPoint}/${userId}/editData`);
+  }
+
   /**
    * * Atualiza os dados do utilizador
    * */
-  putUser(userId: String, atualizarUser: User): Observable<User> {
-    return this.http.put<User>(`${endPoint}/${userId}`, atualizarUser, httpOptions);
+  putUser(userId: String, atualizarUser: UpdateUserDados ): Observable<UpdateUserDados> {
+    return this.http.put<UpdateUserDados>(`${endPoint}/${userId}`, atualizarUser, httpOptions);
   }
 
   /**
@@ -42,7 +50,7 @@ export class UserService {
   /**
    * * Permite atualizar a password do Utilizador
    * */
-  putPasswordUser(userId: String, updatePassword: Password): Observable<User> {
-    return this.http.put<User>(`${endPoint}/${userId}`, updatePassword, httpOptions);
+  putPasswordUser(userId: String, updatePassword: Password): Observable<Password> {
+    return this.http.put<Password>(`${endPoint}/${userId}/ChangePassword`, updatePassword, httpOptions);
   }
 }

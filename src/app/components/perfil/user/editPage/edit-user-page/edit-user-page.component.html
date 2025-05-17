@@ -1,6 +1,7 @@
 <div class="layout">
-    <app-nav-bar></app-nav-bar>
+    <app-nav-bar [userId]="userId"></app-nav-bar>
     <div class="content-wrapper">
-        <app-edit-user-form></app-edit-user-form>
+        <h3>Atualizar Dados</h3>
+        <app-edit-user-form [user]="user" [userId]="userId"></app-edit-user-form>
     </div>
 </div>

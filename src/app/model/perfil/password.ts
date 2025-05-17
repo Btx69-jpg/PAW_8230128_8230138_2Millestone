@@ -1,10 +1,10 @@
 export class Password {
-    passwordAtual: string;
+    atualPassword: string;
     newPassword: string;
     confirmNewPassword: string;
 
     constructor(passwordAtual: string, newPassword: string, confirmNewPassword: string) {
-        this.passwordAtual = passwordAtual;
+        this.atualPassword = passwordAtual;
         this.newPassword = newPassword;
         this.confirmNewPassword = confirmNewPassword;
 
@@ -13,7 +13,7 @@ export class Password {
     }
 
     private validatePassword() {
-        if (this.passwordAtual.length < 8) {
+        if (this.atualPassword.length < 8) {
             throw new Error('A password deve ter no mínimo 8 caracteres');
         }
 

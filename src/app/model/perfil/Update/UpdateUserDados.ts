@@ -1,31 +1,21 @@
-import { AddressOrder } from "../order/address-order";
-import { Perfil } from "./perfil";
-import { Order } from "../order/order";
+import { UpdatePerfil } from "./UpdatePerfilDados";
 
-export class User {
-    _id: string;
+
+export class UpdateUserDados {
     firstName: string;
     lastName: string;
-    perfil: Perfil;
-    addresses: AddressOrder[];
-    cart?: Order[];
+    perfil: UpdatePerfil;
     birthdate?: Date;
 
-    constructor(_id: string, firstName: string, lastName: string, perfil: Perfil,
-        addresses: AddressOrder[], cart: Order[] = [], birthdate?: Date) {
-        this._id = _id;
+    constructor(firstName: string, lastName: string, perfil: UpdatePerfil, birthdate?: Date) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.perfil = perfil;
-        this.addresses = addresses;
-        this.cart = cart;
         this.birthdate = birthdate;
 
         this.validateFirstName();
         this.validateLastName();
         this.validatePerfil();
-        this.validateAddresses();
-        this.validateCart();
         this.validateBirthdate();
     }
 
@@ -60,18 +50,6 @@ export class User {
     private validatePerfil() {
         if (!this.perfil) {
             throw new Error('O campo perfil é obrigatório');
-        }
-    }
-
-    private validateAddresses() {
-        if (!Array.isArray(this.addresses)) {
-            throw new Error('O campo addresses deve ser um array');
-        }
-    }
-
-    private validateCart() {
-        if (!Array.isArray(this.cart)) {
-            throw new Error('O campo cart deve ser um array');
         }
     }
 

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../../services/user/user.service';
+import { PerfilService } from '../../../../services/perfil/perfil.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,10 +14,7 @@ import { UserService } from '../../../../services/user/user.service';
 export class NavBarComponent implements OnInit {
   @Input() userId: string = '';
 
-  constructor(private userService: UserService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private userService: UserService, private perfilService: PerfilService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
   
@@ -36,7 +34,16 @@ export class NavBarComponent implements OnInit {
 
   // Faz o logout do utilizador
   logout() {
-    // this.router.navigate(['/logout']);
+    this.perfilService.getLogout().subscribe({
+      next: () => {
+        if (typeof window !== 'undefined') {
+            window.location.href = 'http://localhost:3000';
+        }  
+      },
+      error: (err) => {
+        console.error('Erro ao fazer logout:', err);
+      }
+    });
   }
 
   //Pede ao utilizador para apagar 

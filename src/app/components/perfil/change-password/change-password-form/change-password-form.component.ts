@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Password } from '../../../../model/perfil/password';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-change-password-form',
@@ -9,11 +11,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './change-password-form.component.html',
   styleUrl: './change-password-form.component.css'
 })
-export class ChangePasswordFormComponent {
-  form: FormGroup;
+export class ChangePasswordFormComponent implements OnInit{
+  @Input() userId!: string;
+  form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
-    this.form = this.fb.group({
+  constructor(private userService:UserService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+      this.form = this.fb.group({
       atualPassword: ['', [Validators.required, Validators.minLength(8)]],
       newPassword:   ['', [Validators.required, Validators.minLength(8)]],
       confirmNewPassword: ['', [Validators.required, Validators.minLength(8)]],
@@ -27,6 +32,10 @@ export class ChangePasswordFormComponent {
     const newPassword = group.get('newPassword')!.value;
     const confirmPassword = group.get('confirmNewPassword')!.value;
     let equals: boolean = false;
+
+    if(!newPassword || !confirmPassword) {
+      equals = true;
+    }
     if (newPassword === confirmPassword) {
       equals = true;
     }
@@ -40,7 +49,27 @@ export class ChangePasswordFormComponent {
   }
 
   goBack(): void {
-    console.log("Voltar")
     this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  onSubmit(): void {
+    const formData = this.form.value;
+    const atualPassword = formData.atualPassword;
+    const novaPassword = formData.newPassword;
+    const confirmPassword = formData.confirmNewPassword;
+
+    const newPassword = new Password(atualPassword, novaPassword, confirmPassword);
+    this.updatePassword(newPassword);
+  }
+
+  private updatePassword(newPassword: Password): void {
+    this.userService.putPasswordUser(this.userId, newPassword).subscribe({
+      next: () => {
+        console.log("Password atualizada com sucesso!");
+        this.goBack();
+      }, error: (error) => {
+        console.log("Erro a atualizar a password", error);
+      }
+    })
   }
 }
