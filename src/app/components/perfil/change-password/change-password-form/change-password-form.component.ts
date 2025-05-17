@@ -1,22 +1,18 @@
-import { Component, Input  } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  standalone: true,
   selector: 'app-change-password-form',
-  imports: [ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './change-password-form.component.html',
   styleUrl: './change-password-form.component.css'
 })
 export class ChangePasswordFormComponent {
-  /** URls para os botões de action e voltar */
-  @Input() action!: string;
-  @Input() backUrl!: string;
-
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.form = this.fb.group({
       atualPassword: ['', [Validators.required, Validators.minLength(8)]],
       newPassword:   ['', [Validators.required, Validators.minLength(8)]],
@@ -41,5 +37,10 @@ export class ChangePasswordFormComponent {
     }
 
     return error;
+  }
+
+  goBack(): void {
+    console.log("Voltar")
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

@@ -5,8 +5,8 @@ import { AppRoutingModule } from "./app.routes";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { CreateAddressFormComponent } from "./components/perfil/manage-address/create-address/create-address-form/create-address-form.component";
-import { FormsModule } from "@angular/forms";
-
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
     declarations: [
@@ -18,9 +18,10 @@ import { FormsModule } from "@angular/forms";
         AppRoutingModule,
         HttpClientModule,
         RouterModule,
-        FormsModule
+        FormsModule, 
+        ReactiveFormsModule
     ],
-    providers: [],
+    providers: [CookieService],
     bootstrap: [AppComponent]
 })
 

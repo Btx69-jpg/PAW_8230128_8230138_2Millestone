@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddresOrderService } from '../../../../../services/address/addres-order.service';
@@ -14,7 +14,7 @@ import { Address } from '../../../../../model/address';
   templateUrl: './edit-address-form.component.html',
   styleUrl: './edit-address-form.component.css'
 })
-export class EditAddressFormComponent {
+export class EditAddressFormComponent implements OnInit{
   @Input() addressOrder: AddressOrder = {
     nif: undefined,
     address: { street: '', postal_code: '', city: '' }

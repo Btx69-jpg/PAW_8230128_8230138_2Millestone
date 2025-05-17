@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../../../../../model/perfil/user';
 import { UserService } from '../../../../../services/user/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './edit-user-form.component.html',
   styleUrl: './edit-user-form.component.css'
 })
-export class EditUserFormComponent {
+export class EditUserFormComponent implements OnInit {
   @Input() user!: User
   userId!: string
   form!: FormGroup;

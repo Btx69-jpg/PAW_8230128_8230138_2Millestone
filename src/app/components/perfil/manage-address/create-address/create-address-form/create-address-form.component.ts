@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Address } from '../../../../../model/address';
 import { AddressOrder } from '../../../../../model/order/address-order';
 import { HttpResponse } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { FormsModule, NgForm } from '@angular/forms';
   templateUrl: './create-address-form.component.html',
   styleUrl: './create-address-form.component.css'
 })
-export class CreateAddressFormComponent {
+export class CreateAddressFormComponent implements OnInit {
   @Input() userId!: string;
   addressData = {
     nif: '',

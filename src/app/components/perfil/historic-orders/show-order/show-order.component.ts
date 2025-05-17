@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HistoricOrderService } from '../../../../services/historicOrder/historic-order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Order } from '../../../../model/order/order';
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './show-order.component.html',
   styleUrl: './show-order.component.css'
 })
-export class ShowOrderComponent {
+export class ShowOrderComponent implements OnInit {
   order: Order = {} as Order;
   userId!: string;
   @Input() orderId!: string;

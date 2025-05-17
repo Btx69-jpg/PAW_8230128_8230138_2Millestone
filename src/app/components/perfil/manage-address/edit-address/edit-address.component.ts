@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NavBarComponent } from '../../user/nav-bar/nav-bar.component';
 import { EditAddressFormComponent } from './edit-address-form/edit-address-form.component';
 import { AddressOrder } from '../../../../model/order/address-order';
@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './edit-address.component.html',
   styleUrl: './edit-address.component.css'
 })
-export class EditAddressPageComponent {
+export class EditAddressPageComponent implements OnInit{
   addressOrder: AddressOrder = {} as AddressOrder;
   userId!: string;
   addressId!: string;

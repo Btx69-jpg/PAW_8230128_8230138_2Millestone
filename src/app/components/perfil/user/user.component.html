@@ -1,6 +1,18 @@
 <div class="layout">
     <app-nav-bar [userId]="user._id"></app-nav-bar>
     <div class="content-wrapper">
+        <h1 class="mb-4">Bem-Vindo {{ user.firstName }}</h1>
+        <div class="row bg-white p-4 rounded shadow mb-4">
+                <div class="col-12 mb-3 d-flex align-items-center">
+                    <button (click)="goEditPage()" class="custom-btn me-3">
+                        Editar Dados
+                    </button>
+                    
+                    <button (click)="goEditPasswordPage()" class="custom-btn">
+                        Editar Password
+                    </button>
+                </div>
+            </div>
         <app-dados-user [user]="user"></app-dados-user>
     </div>
 </div>

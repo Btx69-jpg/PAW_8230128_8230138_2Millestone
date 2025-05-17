@@ -22,18 +22,18 @@
          <ng-template #restName> 
         -->
        
-            <div class="col-md-4">
-                <label for="nameRest" class="form-label">Nome do Restaurante:</label>
-                <input
-                type="text"
-                id="nameRest"
-                class="form-control"
-                formControlName="nameRest"
-                placeholder="Nome do Restaurante"/>
-                <div *ngIf="form.get('nameRest')?.invalid && form.get('nameRest')?.touched">
-                    O campo do restaurante deve ter no máximo 100 caracteres e só pode ter letras e numeros
-                </div>
+        <div class="col-md-4">
+            <label for="nameRest" class="form-label">Nome do Restaurante:</label>
+            <input
+            type="text"
+            id="nameRest"
+            class="form-control"
+            formControlName="nameRest"
+            placeholder="Nome do Restaurante"/>
+            <div *ngIf="form.get('nameRest')?.invalid && form.get('nameRest')?.touched">
+                O campo do restaurante deve ter no máximo 100 caracteres e só pode ter letras e numeros
             </div>
+        </div>
         <!-- </ng-template> -->
 
 
@@ -46,7 +46,6 @@
                 class="form-control"
                 formControlName="price"
                 placeholder="Preço"
-                min="0"
                 step="0.01" />
                 <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched">
                     O campo preço não pode ser negativo
@@ -63,23 +62,23 @@
                 formControlName="dateFrom"
                 placeholder="Introduza uma data"
                 [min]="'2000-01-01'"
-                [max]="form.get('to')?.value"
+                [max]="form.get('dateTo')?.value"
                 />
-            <div *ngIf="form.get('from')?.invalid && form.get('from')?.touched">
+            <div *ngIf="form.get('dateFrom')?.invalid && form.get('from')?.touched">
                 O campo da data está mal preenchido
             </div>
         </div>
 
         <!-- Data fim -->
         <div class="col-md-4">
-        <label for="dateTo" class="form-label">Até data:</label>
-        <input
-            type="date"
-            id="dateTo"
-            class="form-control"
-            formControlName="dateTo"
-            placeholder="Introduza uma data"
-            [min]="form.get('dateFrom')?.value"/>
+            <label for="dateTo" class="form-label">Até data:</label>
+            <input
+                type="date"
+                id="dateTo"
+                class="form-control"
+                formControlName="dateTo"
+                placeholder="Introduza uma data"
+                [min]="form.get('dateFrom')?.value"/>
         </div>
 
         <div class="col-12 d-flex justify-content-center">

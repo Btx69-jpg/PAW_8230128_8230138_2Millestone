@@ -1,22 +1,11 @@
 <div *ngIf="user?.perfil">
     <div class="content">
-        <h1 class="mb-4">Bem-Vindo {{ user.firstName }}</h1>
         
         <div class="row bg-white p-4 rounded shadow mb-4">
-            <div class="col-12 mb-3 d-flex align-items-center">
-                <button routerLink="/editar-dados" class="custom-btn me-3">
-                Editar Dados
-                </button>
-                <button routerLink="/perfil/user/changePassword" class="custom-btn">
-                    Editar Password
-                </button>
-            </div>
-
             <div class="col-12 text-center">
                 <div *ngIf="user.perfil.perfilPhoto"> 
                     <img [src]="user.perfil.perfilPhoto" alt="Foto de Perfil" class="profile-pic">
                 </div>
-                
             </div>
 
             <div class="col-12">
@@ -30,7 +19,6 @@
             <div class="col-md-6">
                 <p><strong>Número Telefónico:</strong> {{ user.perfil.phoneNumber }}</p>
             </div>
-
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { HistoricOrderService } from '../../../../services/historicOrder/historic-order.service';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { Order } from '../../../../model/order/order';
   templateUrl: './search-order.component.html',
   styleUrl: './search-order.component.css'
 })
-export class SearchOrderComponent {
+export class SearchOrderComponent implements OnInit {
   @Output() filtroAplicado = new EventEmitter<Order[]>();
   @Input() userId!: string;
   form!: FormGroup;

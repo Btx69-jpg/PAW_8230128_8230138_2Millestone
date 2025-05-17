@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Order } from '../../../model/order/order';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavBarComponent } from '../user/nav-bar/nav-bar.component';
@@ -13,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './historic-orders.component.html',
   styleUrl: './historic-orders.component.css'
 })
-export class HistoricOrdersComponent {
+export class HistoricOrdersComponent implements OnInit {
     historicOrder: Order[] = [];
     userId: string = '';
   

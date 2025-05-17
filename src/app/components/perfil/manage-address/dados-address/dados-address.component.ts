@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
   templateUrl: './dados-address.component.html',
   styleUrls: ['./dados-address.component.css']
 })
-export class DadosAddressComponent implements OnInit{
+export class DadosAddressComponent implements OnInit {
   userId: string = '';
   addresses: AddressOrder[] = [];
 

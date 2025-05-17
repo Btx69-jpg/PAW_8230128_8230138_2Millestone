@@ -15,7 +15,7 @@ import { User } from '../../../../model/perfil/user';
 export class DadosUserComponent implements OnInit {
   @Input() user: User = {} as User;
 
-  constructor(public userRest: UserService, private route: ActivatedRoute,private router: Router) {
+  constructor(public userRest: UserService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {

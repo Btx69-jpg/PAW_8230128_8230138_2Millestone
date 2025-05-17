@@ -1,6 +1,6 @@
 <nav class="sidebar d-flex flex-column p-3">
   <!-- Botão Página Inicial -->
-  <a routerLink="/" class="logo-container">
+  <a  href="http://localhost:3000" class="logo-container">
     <i class="bi bi-house-door-fill me-2"></i>
     <span class="fs-6">Página Inicial</span>
   </a>
@@ -23,6 +23,13 @@
     </li>
 
     <li class="nav-item">
+      <a [routerLink]="['/perfil', 'user', userId, 'historicOrder']" class="nav-link">
+        <i class="bi bi-clock-history"></i>
+        <span>Encomendas</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a [routerLink]="['/perfil', 'user', this.userId, 'manageAddresses']" class="nav-link ">
         <i class="bi bi-geo-alt-fill"></i>
         <span>Gestão das Moradas</span>
@@ -39,10 +46,11 @@
 
     <!-- Apagar Conta -->
     <li class="nav-item">
-      <button (click)="deleteAccount()" class="btn btn-link w-100 text-start">
+      <button (click)="confirmDelete()" class="btn btn-link w-100 text-start">
         <i class="bi bi-trash3 me-2"></i>
         Remover Conta Permanentemente
       </button>
     </li>
+
   </ul>
 </nav>

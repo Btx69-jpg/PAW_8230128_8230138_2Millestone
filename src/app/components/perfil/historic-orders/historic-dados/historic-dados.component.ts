@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Order } from '../../../../model/order/order';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HistoricOrderService } from '../../../../services/historicOrder/historic-order.service';
@@ -11,7 +11,7 @@ import { ShowOrderComponent } from '../show-order/show-order.component';
   templateUrl: './historic-dados.component.html',
   styleUrl: './historic-dados.component.css'
 })
-export class HistoricDadosComponent {
+export class HistoricDadosComponent implements OnInit {
   historicOrder: Order[] = [];
   orderId!: string;
   userId!: string;

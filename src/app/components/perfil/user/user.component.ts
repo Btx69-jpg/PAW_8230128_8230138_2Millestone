@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { User } from '../../../model/perfil/user';
@@ -13,7 +13,7 @@ import { DadosUserComponent } from './dados-user/dados-user.component';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
   user: User = {} as User;
 
   constructor(public userRest: UserService, private route: ActivatedRoute,private router: Router) {}
@@ -28,6 +28,14 @@ export class UserComponent {
           console.error("Erro a carregar o utilizador", err);
         }
     });
+  }
+
+  goEditPage(): void {
+    this.router.navigate(['editUser'], { relativeTo: this.route });
+  }
+
+  goEditPasswordPage(): void {
+    this.router.navigate(['changePassword'], { relativeTo: this.route });
   }
 
 }

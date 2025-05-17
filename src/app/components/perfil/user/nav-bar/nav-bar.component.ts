@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class NavBarComponent implements OnInit {
   @Input() userId: string = '';
 
-  constructor(
+  constructor(private userService: UserService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -38,10 +39,24 @@ export class NavBarComponent implements OnInit {
     // this.router.navigate(['/logout']);
   }
 
-  // Apaga a conta do utilizador
+  //Pede ao utilizador para apagar 
+  confirmDelete() {
+    const confirmed = window.confirm('Tem a certeza que pretende apagar a conta permanentemente?');
+    if (confirmed) {
+      this.deleteAccount();
+    }
+  }
+
+  // Apaga a conta do utilizador (Testar)
   deleteAccount() {
-    // if (confirm('Tem a certeza que pretende apagar a conta?')) {
-    //   // Implementar lógica de delete
-    // }
+    this.userService.deleteUser(this.userId).subscribe({
+      next: () => {
+        console.log("User eliminado com sucesso");
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error("Erro a carregar o utilizador", err);
+      }
+    })
   }
 }
