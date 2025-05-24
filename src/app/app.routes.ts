@@ -16,6 +16,7 @@ import { ChangePasswordComponent } from './components/perfil/change-password/cha
 import { AuthGuard } from './auth/AuthGuard';
 import { IsClienteOrDonoGuard } from './auth/Guards/IsClienteOrDonoGuard';
 import { EditUserPageComponent } from './components/perfil/user/editPage/edit-user-page/edit-user-page.component';
+import { OrdersPageComponent } from './components/perfil/user/orders/ordes-page/ordes-page.component';
 
 /**
  * Isto é os routes que tinha no express
@@ -38,6 +39,16 @@ export const routes: Routes = [
     { 
         path: 'perfil/user/:userId/editUser', 
         component: EditUserPageComponent,
+        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+    },
+    {
+        path: 'perfil/user/:userId/orders',
+        component: OrdersPageComponent,
+        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+    },
+    {
+        path: 'perfil/user/:userId/orders/showOrder',
+        component: HistoricOrdersComponent,
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     { 
@@ -64,7 +75,7 @@ export const routes: Routes = [
         path: 'perfil/user/:userId/manageAddresses/adicionar',
         component: CreateAddressComponent,
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
-    },
+    }
 ];
 
 @NgModule({

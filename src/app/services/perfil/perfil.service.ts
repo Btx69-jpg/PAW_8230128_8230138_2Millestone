@@ -19,6 +19,7 @@ export class PerfilService {
 
   /**
    * * Procura por utilizador especifico
+   * * withCredentials --> habilita as cookies
    * */
   getLogout(): Observable<void> {
     return this.http.get<void>(`${endPoint}`, {withCredentials: true});

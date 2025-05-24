@@ -28,6 +28,10 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['/perfil', 'user', this.userId, 'historicOrder']);
   }
 
+  orderPage() {    
+    this.router.navigate(['/perfil', 'user', this.userId, 'orders']);
+  }
+
   manageAddressPage() {
     this.router.navigate(['/perfil', 'user', this.userId, 'manageAddresses']);
   }

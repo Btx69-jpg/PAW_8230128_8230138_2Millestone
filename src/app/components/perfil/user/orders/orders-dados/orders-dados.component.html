@@ -1,1 +1,8 @@
-<p>orders-dados works!</p>
+<div class="card-body">
+    <h5 class="card-title">Nome do restaurante: {{ order.restaurant.name }}</h5>
+    <h6>{{ order.itens.length }} items</h6>
+    <h6>{{ order.date }}</h6>
+    <h6>{{ order.status }}</h6>
+    <button (click)="showOrder(order._id)">Ver Menu</button>
+    <button (click)="cancelarOrder(order._id)">Cancelar</button>
+</div>
