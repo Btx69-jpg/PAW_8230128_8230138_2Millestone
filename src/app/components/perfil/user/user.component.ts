@@ -5,6 +5,7 @@ import { User } from '../../../model/perfil/user';
 import { UserService } from '../../../services/user/user.service';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { DadosUserComponent } from './dados-user/dados-user.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   standalone: true,
@@ -16,9 +17,10 @@ import { DadosUserComponent } from './dados-user/dados-user.component';
 export class UserComponent implements OnInit {
   user: User = {} as User;
 
-  constructor(public userRest: UserService, private route: ActivatedRoute,private router: Router) {}
+  constructor(private titleService: Title, public userRest: UserService, private route: ActivatedRoute,private router: Router) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Perfil');
     const idTemp = this.route.snapshot.params['userId'];
     this.userRest.getUser(idTemp).subscribe({
         next: (dadosUser: User) => {

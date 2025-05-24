@@ -36,8 +36,8 @@ export class UserService {
   /**
    * * Atualiza os dados do utilizador
    * */
-  putUser(userId: String, atualizarUser: UpdateUserDados ): Observable<UpdateUserDados> {
-    return this.http.put<UpdateUserDados>(`${endPoint}/${userId}`, atualizarUser, httpOptions);
+  putUser(userId: String, formData: FormData ): Observable<UpdateUserDados> {
+    return this.http.put<UpdateUserDados>(`${endPoint}/${userId}`, formData);
   }
 
   /**

@@ -17,7 +17,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 export class EditUserFormComponent implements OnInit, OnChanges {
   @Input() user!: UpdateUserDados;
   @Input() userId!: string;
-
+  selectedFile: File | null = null;
   form!: FormGroup;
 
   constructor(
@@ -54,13 +54,32 @@ export class EditUserFormComponent implements OnInit, OnChanges {
     this.form.setValue({
       firstName: this.user.firstName || '',
       lastName: this.user.lastName || '',
-      birthdate: this.user.birthdate || '',
+      birthdate: this.formatDateToInput(this.user.birthdate) || '',
       perfil: {
         phoneNumber: this.user.perfil.phoneNumber || '',
         email: this.user.perfil.email || '',
         perfilPhoto: this.user.perfil.perfilPhoto || ''
       }
     });
+  }
+
+  private formatDateToInput(date: Date | undefined | null): string {
+    if (!date) return '';
+
+    const d = new Date(date);
+    if (isNaN(d.getTime())) { 
+      return '';
+    } 
+
+    return d.toISOString().split('T')[0];
+  }
+
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
   }
 
   goBack(): void {
@@ -70,25 +89,25 @@ export class EditUserFormComponent implements OnInit, OnChanges {
   onSubmit(): void {
     if (this.form.invalid) return;
 
-    const formData = this.form.value;
-    const novoPerfil = new UpdatePerfil(
-      formData.perfil.perfilPhoto,
-      formData.perfil.phoneNumber,
-      formData.perfil.email
-    );
+    const formValue = this.form.value;
+    const formData = new FormData();
 
-    const novoUser = new UpdateUserDados(
-      formData.firstName,
-      formData.lastName,
-      novoPerfil,
-      formData.birthdate
-    );
+    formData.append('firstName', formValue.firstName);
+    formData.append('lastName', formValue.lastName);
+    formData.append('birthdate', formValue.birthdate || '');
 
-    this.atualizarUser(novoUser);
+    formData.append('email', formValue.perfil.email);
+    formData.append('phoneNumber', formValue.perfil.phoneNumber);
+
+    if (this.selectedFile) {
+      formData.append('perfilPhoto', this.selectedFile, this.selectedFile.name);
+    }
+
+    this.atualizarUser(formData);
   }
 
-  private atualizarUser(novoUser: UpdateUserDados): void {
-    this.userService.putUser(this.userId, novoUser).subscribe({
+  private atualizarUser(formData: FormData): void {
+    this.userService.putUser(this.userId, formData).subscribe({
       next: () => {
         console.log('Utilizador atualizado com sucesso');
         this.goBack();

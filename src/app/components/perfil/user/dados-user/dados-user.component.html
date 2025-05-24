@@ -2,10 +2,13 @@
     <div class="content">
         
         <div class="row bg-white p-4 rounded shadow mb-4">
-            <div class="col-12 text-center">
-                <div *ngIf="user.perfil.perfilPhoto"> 
-                    <img [src]="user.perfil.perfilPhoto" alt="Foto de Perfil" class="profile-pic">
-                </div>
+
+            <div *ngIf="user.perfil.perfilPhoto" class="col-auto pe-4">
+                <img 
+                    [src]="fullImagePath"
+                    alt="Foto de Perfil"
+                    class="profile-pic img-thumbnail"
+                    width="100" />
             </div>
 
             <div class="col-12">

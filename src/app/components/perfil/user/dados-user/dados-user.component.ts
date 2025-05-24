@@ -4,6 +4,7 @@ import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../../../../services/user/user.service';
 import { User } from '../../../../model/perfil/user';
+import { environment } from '../../../../enviroments/enviroment';
 
 @Component({
   selector: 'app-dados-user',
@@ -18,6 +19,14 @@ export class DadosUserComponent implements OnInit {
   constructor(public userRest: UserService, private route: ActivatedRoute, private router: Router) {
   }
 
-  ngOnInit(): void {
+  get fullImagePath(): string {
+    return this.user?.perfil?.perfilPhoto
+      ? `${environment.apiUrl}${this.user.perfil.perfilPhoto}`
+      : '/assets/img/no-image.png';
   }
+
+  ngOnInit(): void {
+    console.log("Foto do utilizador:", this.user?.perfil?.perfilPhoto);
+  }
+  
 }

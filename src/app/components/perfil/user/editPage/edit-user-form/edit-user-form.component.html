@@ -55,7 +55,13 @@
 
         <div class="mb-3">
             <label for="perfilPhoto" class="form-label">Foto de Perfil:</label>
-            <input type="file" id="perfilPhoto" class="form-control"/>
+            <input
+                type="file"
+                id="perfilPhoto"
+                class="form-control"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+            />
         </div>
     </div>
 
