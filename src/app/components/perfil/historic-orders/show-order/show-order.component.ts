@@ -3,6 +3,7 @@ import { HistoricOrderService } from '../../../../services/historicOrder/histori
 import { ActivatedRoute, Router } from '@angular/router';
 import { Order } from '../../../../model/order/order';
 import { CommonModule } from '@angular/common';
+import { OrderService } from '../../../../services/user/order/order.service';
 
 @Component({
   selector: 'app-show-order',
@@ -15,27 +16,56 @@ export class ShowOrderComponent implements OnInit {
   userId!: string;
   @Input() orderId!: string;
 
-  constructor(private historicService: HistoricOrderService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private historicService: HistoricOrderService, private orderService: OrderService, 
+    private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
       this.userId = this.route.snapshot.params['userId'];
       this.orderId = this.route.snapshot.params['orderId'];
 
-      this.historicService.getOrderofHistoric(this.userId, this.orderId).subscribe({
-        next: (order: Order) => {
-          this.order = order;
-        },
-        error: (error) => {
+      const url = this.router.url;
+
+      if (url.includes('historicOrder')) {
+        this.carregarOrderOfHistoric();
+      } else if (url.includes('orders')) {
+        this.carregarOrder();
+      } else {
+        console.warn('URL desconhecida, não foi possível carregar pedido.');
+      }
+      console.log("Show order")
+  }
+
+  private carregarOrderOfHistoric(): void {
+    this.historicService.getOrderofHistoric(this.userId, this.orderId).subscribe({
+      next: (order: Order) => {
+        this.order = order;
+      },
+      error: (error) => {
           console.error("Erro a procurar pelo pedido");
         }
-      })
+    })
   }
 
-  getRoute() {
-    return this.route;
+  private carregarOrder(): void {
+    this.orderService.getOrder(this.userId, this.orderId).subscribe({
+      next: (order: Order) => {
+        this.order = order;
+      },
+      error: (error) => {
+          console.error("Erro a procurar pelo pedido");
+        }
+    })
   }
 
-  getRouter() {
-    return this.router;
+  voltar() {
+    const url = this.router.url;
+
+    if (url.includes('historicOrder')) {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    } else if (url.includes('orders')) {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Order } from '../../../../../model/order/order';
 import { OrdersDadosComponent } from '../orders-dados/orders-dados.component';
 import { CommonModule } from '@angular/common';
@@ -10,5 +10,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './ordes-lista.component.css'
 })
 export class OrdersListaComponent {
-  @Input() orders!: Order[]
+  @Input() orders!: Order[];
+  @Input() userId!: string;
+
+  @Output() atualizarLista = new EventEmitter<void>();
+
+  notificarPai() {
+    this.atualizarLista.emit();
+  }
 }

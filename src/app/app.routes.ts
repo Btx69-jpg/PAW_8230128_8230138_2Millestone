@@ -17,6 +17,8 @@ import { AuthGuard } from './auth/AuthGuard';
 import { IsClienteOrDonoGuard } from './auth/Guards/IsClienteOrDonoGuard';
 import { EditUserPageComponent } from './components/perfil/user/editPage/edit-user-page/edit-user-page.component';
 import { OrdersPageComponent } from './components/perfil/user/orders/ordes-page/ordes-page.component';
+import { ShowOrderComponent } from './components/perfil/historic-orders/show-order/show-order.component';
+import { OrderDetailsComponent } from './components/perfil/user/orders/order-details/order-details.component';
 
 /**
  * Isto é os routes que tinha no express
@@ -47,8 +49,8 @@ export const routes: Routes = [
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     {
-        path: 'perfil/user/:userId/orders/showOrder',
-        component: HistoricOrdersComponent,
+        path: 'perfil/user/:userId/orders/showOrder/:orderId',
+        component: OrderDetailsComponent,
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     { 

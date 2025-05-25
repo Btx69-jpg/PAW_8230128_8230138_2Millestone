@@ -19,7 +19,7 @@ export class OrdersPageComponent {
   
   ngOnInit() {
     this.userId = this.route.snapshot.params['userId'];
-    //this.carregarOrders();
+    this.carregarOrders();
   }
 
   carregarOrders() {

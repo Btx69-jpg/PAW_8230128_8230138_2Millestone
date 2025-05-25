@@ -1,0 +1,49 @@
+<div *ngIf="cart?.itens?.length > 0">
+    <div class="mb-3">
+        <strong>TOTAL itens: {{ cart.itens.length }}</strong>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Produtos no Carrinho</h5>
+        </div>
+        <div class="card-body">
+            <table class="table align-middle">
+                <thead>
+                <tr>
+                    <th>Artigo</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Qtd</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of cart.itens">
+                    <td>{{ item.item }}</td>
+                    <td>{{ item.portion }}</td>
+                    <td>{{ item.price.toFixed(2) }} €</td>
+                    <td>
+                    <input
+                        type="number"
+                        class="form-control form-control-sm"
+                        [(ngModel)]="item.quantity"
+                        min="1"
+                        style="width: 60px;"
+                    />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <a routerLink="/" class="btn btn-secondary">Continuar a Comprar</a>
+            <a routerLink="/checkOut/limparCarrinho" class="btn btn-outline-danger"> Limpar Carrinho </a>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!cart?.itens?.length">
+    <div class="alert alert-info">
+        Não há itens no carrinho no momento.
+    </div>
+    <a routerLink="/produtos" class="btn btn-primary" id="OrangeButton">Voltar aos Produtos</a>
+</div>

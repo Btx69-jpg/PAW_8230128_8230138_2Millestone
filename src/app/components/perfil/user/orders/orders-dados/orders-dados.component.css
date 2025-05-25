@@ -1,0 +1,33 @@
+.botao-container {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-ver {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-ver:hover {
+  background-color: #1e40af;
+}
+
+.btn-cancelar {
+  background-color: #dc2626;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-cancelar:hover {
+  background-color: #991b1b;
+}

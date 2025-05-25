@@ -1,2 +1,4 @@
 /* * Ficheiro CSS global, o que aplicar aqui fica em todos os componentes
 */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

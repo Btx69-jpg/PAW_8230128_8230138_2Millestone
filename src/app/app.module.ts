@@ -7,6 +7,8 @@ import { RouterModule } from "@angular/router";
 import { CreateAddressFormComponent } from "./components/perfil/manage-address/create-address/create-address-form/create-address-form.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CookieService } from 'ngx-cookie-service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -19,7 +21,9 @@ import { CookieService } from 'ngx-cookie-service';
         HttpClientModule,
         RouterModule,
         FormsModule, 
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatSnackBarModule
     ],
     providers: [CookieService],
     bootstrap: [AppComponent]

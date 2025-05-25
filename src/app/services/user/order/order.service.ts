@@ -31,4 +31,11 @@ export class OrderService {
   getOrder(userId: String, orderId: String): Observable<Order> {
     return this.http.get<Order>(`${endPoint}/${userId}/orders/${orderId}`);
   }
+
+  /**
+   * * Cancela uma encomenda realizada pelo utilizador
+   */
+  cancelOrder(userId: String, orderId: String): Observable<Order> {
+    return this.http.delete<Order>(`${endPoint}/${userId}/orders/${orderId}`);
+  }
 }

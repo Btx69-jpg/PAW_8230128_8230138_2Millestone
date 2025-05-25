@@ -1,0 +1,38 @@
+<div *ngIf="cart?.price > 0" class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Resumo</h5>
+    </div>
+
+    <div class="card-body">
+        <p class="mb-2">
+            <strong>Produtos:</strong>
+            <span class="float-end">€ {{ cart.price.toFixed(2) }}</span>
+        </p>
+
+        <p class="mb-2">
+            <strong>IVA (23%):</strong>
+            <span class="float-end">€ {{ iva.toFixed(2) }}</span>
+        </p>
+
+        <hr />
+
+        <p class="mb-2">
+            <strong>Total:</strong>
+            <span class="float-end">€ {{ total.toFixed(2) }}</span>
+        </p>
+
+        <div class="mb-3">
+            <label for="cupom" class="form-label">Aplicar cupom</label>
+            <input
+                type="text"
+                class="form-control"
+                id="cupom"
+                placeholder="Insira seu cupom"
+            />
+        </div>
+
+        <a routerLink="/checkout" class="btn btn-primary w-100" id="OrangeButton">
+            Avançar para o Checkout
+        </a>
+    </div>
+</div>

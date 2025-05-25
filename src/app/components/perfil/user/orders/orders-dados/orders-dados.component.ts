@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Order } from '../../../../../model/order/order';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OrderService } from '../../../../../services/user/order/order.service';
 
 @Component({
   selector: 'app-orders-dados',
@@ -10,16 +11,30 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class OrdersDadosComponent {
   @Input() order!: Order;
+  @Input() userId!: string;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  @Output() orderCancelada = new EventEmitter<void>();
 
-  ngOnInit(): void {}
+  constructor(private orderService:OrderService, private route: ActivatedRoute, private router: Router) {}
 
-  showOrder(orderId: string) {
-    this.router.navigate([orderId], { relativeTo: this.route });
+  ngOnInit(): void {
+    this.userId = this.route.snapshot.params['userId'];
   }
 
-  cancelarOrder(orderId: string) {
+  showOrder(orderId: string) {
+    this.router.navigate(['showOrder', orderId], { relativeTo: this.route });
+  }
 
+  //Funciona para apagar do utilizador
+  cancelarOrder(orderId: string) {
+    this.orderService.cancelOrder(this.userId, orderId).subscribe({
+      next: () => {
+        console.log("A encomenda foi cancelada");
+        this.orderCancelada.emit();
+      },
+      error: (error) => {
+        console.error("Erro ao cancelar a encomenda: ", error);
+      }
+    })
   }
 }
