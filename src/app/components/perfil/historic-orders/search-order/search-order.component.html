@@ -1,27 +1,6 @@
 <!-- historic-search.component.html -->
 <div class="col-12 col-md-10 col-lg-8 mx-auto mb-4">
     <form *ngIf="form" [formGroup]="form" (ngSubmit)="filtrar()" class="row g-3 justify-content-center">
-
-        <!-- Se for perfil de Restaurante, mostra busca por cliente 
-        <div class="col-md-4" *ngIf="account.perfil.priority === 'Restaurant'; else restName">
-            <label for="cliente" class="form-label">Nome do Cliente:</label>
-            <input
-            type="text"
-            id="cliente"
-            class="form-control"
-            formControlName="cliente"
-            placeholder="Nome do Cliente"/>
-            <div *ngIf="form.get('cliente')?.invalid && form.get('cliente')?.touched">
-                O campo do cliente deve ter no máximo 100 caracteres e só pode ter letras e numeros
-            </div>
-        </div> 
-        -->
-        
-
-        <!-- Caso contrário, mostra busca por nome de Restaurante 
-         <ng-template #restName> 
-        -->
-       
         <div class="col-md-4">
             <label for="nameRest" class="form-label">Nome do Restaurante:</label>
             <input
@@ -34,9 +13,7 @@
                 O campo do restaurante deve ter no máximo 100 caracteres e só pode ter letras e numeros
             </div>
         </div>
-        <!-- </ng-template> -->
-
-
+        
         <!-- Preço -->
         <div class="col-md-4">
             <label for="price" class="form-label">Preço:</label>

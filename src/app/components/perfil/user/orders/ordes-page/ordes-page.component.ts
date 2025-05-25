@@ -5,6 +5,7 @@ import { OrderService } from '../../../../../services/user/order/order.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NavBarComponent } from '../../nav-bar/nav-bar.component';
 import { OrdersListaComponent } from '../ordes-lista/ordes-lista.component';
+import { FiltroEncomenda } from '../search-orders/search-orders.component';
 
 @Component({
   selector: 'app-ordes-page',
@@ -18,7 +19,9 @@ export class OrdersPageComponent {
   constructor(private orderService: OrderService, private route: ActivatedRoute,private router: Router) {}
   
   ngOnInit() {
-    this.userId = this.route.snapshot.params['userId'];
+      console.log('ngOnInit chamado');
+  this.userId = this.route.snapshot.params['userId'];
+  console.log('userId carregado:', this.userId);
     this.carregarOrders();
   }
 
@@ -31,4 +34,14 @@ export class OrdersPageComponent {
       }
     })
   } 
+
+  filtrar(filtro: FiltroEncomenda) {
+    this.orderService.searchOrders(this.userId).subscribe({
+      next: (ordersDados: Order[]) => {
+        this.orders = ordersDados;
+      }, error: (error: HttpErrorResponse) => {
+        console.error("Erro a carregar o utilizador", error);
+      }
+    })
+  }
 }

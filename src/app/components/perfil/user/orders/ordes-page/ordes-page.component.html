@@ -3,6 +3,7 @@
     <div class="content-wrapper">
         <app-ordes-lista [orders]="orders" 
             [userId]="userId"
-            (atualizarLista)="carregarOrders()"></app-ordes-lista>
+            (atualizarLista)="carregarOrders()"
+            (filtraLista)="filtrar($event)"></app-ordes-lista>
     </div>
 </div>
