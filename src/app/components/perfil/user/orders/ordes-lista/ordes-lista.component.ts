@@ -16,6 +16,7 @@ export class OrdersListaComponent {
   @Output() atualizarLista = new EventEmitter<void>();
 
   notificarPai() {
+    console.log("Vou notificar o meu pai")
     this.atualizarLista.emit();
   }
 }

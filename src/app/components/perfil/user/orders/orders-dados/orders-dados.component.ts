@@ -27,6 +27,7 @@ export class OrdersDadosComponent {
 
   //Funciona para apagar do utilizador
   cancelarOrder(orderId: string) {
+    console.log("Fui chamado para eliminar")
     this.orderService.cancelOrder(this.userId, orderId).subscribe({
       next: () => {
         console.log("A encomenda foi cancelada");
