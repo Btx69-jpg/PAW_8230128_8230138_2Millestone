@@ -19,6 +19,7 @@ import { EditUserPageComponent } from './components/perfil/user/editPage/edit-us
 import { OrdersPageComponent } from './components/perfil/user/orders/ordes-page/ordes-page.component';
 import { ShowOrderComponent } from './components/perfil/historic-orders/show-order/show-order.component';
 import { OrderDetailsComponent } from './components/perfil/user/orders/order-details/order-details.component';
+import { CartPageComponent } from './components/cart/Page/cart-page/cart-page.component';
 
 /**
  * Isto é os routes que tinha no express

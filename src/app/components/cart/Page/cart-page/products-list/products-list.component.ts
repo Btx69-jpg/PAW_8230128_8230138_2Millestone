@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Order } from '../../../../../model/order/order';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-products-list',
@@ -8,5 +9,5 @@ import { Order } from '../../../../../model/order/order';
   styleUrl: './products-list.component.css'
 })
 export class ProductsListComponent {
-  @Input() cart: Order[] = []
+  @Input() cart!: Order
 }
