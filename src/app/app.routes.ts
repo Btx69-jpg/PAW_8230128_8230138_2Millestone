@@ -78,6 +78,11 @@ export const routes: Routes = [
         path: 'perfil/user/:userId/manageAddresses/adicionar',
         component: CreateAddressComponent,
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+    },
+    {
+        path: 'checkOut',
+        component: CartPageComponent,
+        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
     }
 ];
 
