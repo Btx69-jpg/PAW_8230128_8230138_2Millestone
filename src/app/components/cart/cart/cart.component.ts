@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {CheckOutService} from '../../../services/user/checkOut/check-out.service';
 import { Location } from '@angular/common';
 import { Order } from '../../../model/order/order';
@@ -20,8 +21,7 @@ export class CartComponent implements OnInit {
   couponCode = '';
 
   constructor(
-    private cartService: CheckOutService,
-    private location: Location
+    private cartService: CheckOutService,private location: Location,private route: ActivatedRoute,private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -29,12 +29,13 @@ export class CartComponent implements OnInit {
   }
 
   loadCart() {
-    this.cartService.getCart().subscribe(c => this.cart = c);
+    const idTemp = this.route.snapshot.params['userId'];
+    this.cartService.getCart(idTemp).subscribe(c => this.cart = c);
   }
 
   onQuantityChange(item: Item, newQty: number) {
     item.quantity = newQty;
-    this.cartService.updateQuantity(item).subscribe(c => this.cart = c);
+    //this.cartService.updateQuantity(item).subscribe(c => this.cart = c);
   }
 
   clearCart() {

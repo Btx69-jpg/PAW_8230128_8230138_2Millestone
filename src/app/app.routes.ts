@@ -80,7 +80,7 @@ export const routes: Routes = [
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     {
-        path: 'checkOut',
+        path: 'checkOut/:userId',
         component: CartComponent,
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
     }

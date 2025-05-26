@@ -19,8 +19,8 @@ export class CheckOutService {
 
   constructor(private http: HttpClient) {}
 
-  getCart(): Observable<Order> {
-    return this.http.get<Order>(`${endPoint}/obterCarrinho`);
+  getCart(userId: String): Observable<Order> {
+    return this.http.get<Order>(`${endPoint}/obterCarrinho/${userId}`);
   }
 
   clearCart(): Observable<void> {
