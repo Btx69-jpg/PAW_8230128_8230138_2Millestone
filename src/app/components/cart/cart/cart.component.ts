@@ -3,12 +3,17 @@ import {CheckOutService} from '../../../services/user/checkOut/check-out.service
 import { Location } from '@angular/common';
 import { Order } from '../../../model/order/order';
 import { Item } from '../../../model/order/item';
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
+    imports: [
+    CommonModule,    // *ngIf, *ngFor, pipes
+    FormsModule      // se usar ngModel
+  ]
 })
 export class CartComponent implements OnInit {
   cart: Order | null = null;

@@ -2,7 +2,7 @@
 <div class="container py-4">
   <h1 class="mb-4">Carrinho de Compras</h1>
 
-  <ng-container *ngIf="cart && cart.itens.length; else emptyCart">
+  <ng-container *ngIf="cart && cart.itens != null && cart.itens.length; else emptyCart">
     <div class="mb-3">
       <strong>TOTAL ({{ cart.itens.length }} itens)</strong>
     </div>
@@ -19,17 +19,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of cart.itens">
+                <tr *ngFor="let item of cart?.itens">
                   <td>{{ item.item }}</td>
                   <td>{{ item.portion }}</td>
                   <td>€ {{ item.price | number:'1.2-2' }}</td>
                   <td>
-                    <input type="number"
-                           class="form-control form-control-sm"
-                           [value]="item.quantity"
-                           min="1"
-                           style="width: 60px;"
-                           (change)="onQuantityChange(item, $event.target.valueAsNumber)">
+                    <input
+                    #qty
+                    type="number"
+                    class="form-control form-control-sm"
+                    [value]="item.quantity"
+                    min="1"
+                    style="width: 60px;"
+                    (change)="onQuantityChange(item, qty.valueAsNumber)"
+                    />
                   </td>
                 </tr>
               </tbody>
