@@ -33,16 +33,36 @@ export class CartComponent implements OnInit {
     this.cartService.getCart(idTemp).subscribe(c => this.cart = c);
   }
 
-  onQuantityChange(item: Item, newQty: number) {
-    item.quantity = newQty;
-    //this.cartService.updateQuantity(item).subscribe(c => this.cart = c);
+  onQuantityChange(cart: Order, item: Item, newQty: number) {
+    for (const i of cart.itens) {
+      if (i === item) {
+        if (newQty < 0) {
+          newQty = 0;
+        } else {
+          i.quantity = newQty;
+        }
+      }
+    }
+    // Recalcular o preço total do carrinho
+    cart.price = cart.itens.reduce((total, i) => total + (i.price * i.quantity), 0);
+    this.cart = cart;
   }
 
   clearCart() {
-    this.cartService.clearCart().subscribe(() => this.loadCart());
+    const idTemp = this.route.snapshot.params['userId'];
+    this.cartService.clearCart(idTemp).subscribe(() => this.loadCart());
   }
 
   goBack() {
     this.location.back();
+  }
+
+  saveCart(cart: Order) {
+    if (cart) {
+        const idTemp = this.route.snapshot.params['userId'];
+        this.cartService.save(idTemp,cart).subscribe(() => {
+        this.loadCart();
+      });
+    }
   }
 }

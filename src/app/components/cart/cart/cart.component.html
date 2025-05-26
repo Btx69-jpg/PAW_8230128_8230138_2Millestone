@@ -31,13 +31,13 @@
                     [value]="item.quantity"
                     min="1"
                     style="width: 60px;"
-                    (change)="onQuantityChange(item, qty.valueAsNumber)"
+                    (change)="onQuantityChange(cart,item, qty.valueAsNumber)"
                     />
                   </td>
                 </tr>
               </tbody>
             </table>
-            <button class="btn btn-secondary" (click)="goBack()">Continuar a Comprar</button>
+            <button class="btn btn-secondary" (click)="saveCart(cart); goBack()">Continuar a Comprar</button>
             <button class="btn btn-outline-danger" (click)="clearCart()">Limpar Carrinho</button>
           </div>
         </div>
