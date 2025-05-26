@@ -3,6 +3,7 @@
     <div class="content-wrapper">
         <app-ordes-lista [orders]="orders" 
             [userId]="userId"
+            [isBaned]="isBaned"
             (atualizarLista)="carregarOrders()"
             (filtraLista)="filtrar($event)"
             (clearAllOrders)="clear()"></app-ordes-lista>

@@ -20,7 +20,7 @@ export class StripeService {
   /**
    * * Procura por utilizador especifico
    * */
-  async redirectToCheckout(): Promise<void> {
+  async redirectToCheckout(userId: string): Promise<void> {
     const stripe = await loadStripe(environment.stripePublicKey);
 
     if (!stripe) {
@@ -28,7 +28,7 @@ export class StripeService {
     }
 
     try {
-      const session = await this.http.post<{ id: string }>(`${endPoint}/create-checkout-session`,{}).toPromise();
+      const session = await this.http.post<{ id: string }>(`${endPoint}/create-checkout-session`, { userId }).toPromise();
 
       if (!session?.id) {
         throw new Error('Sessão de checkout inválida');

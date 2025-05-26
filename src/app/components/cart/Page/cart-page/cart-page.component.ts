@@ -5,7 +5,7 @@ import { ResumeComponent } from './resume/resume.component';
 
 @Component({
   selector: 'app-cart-page',
-  imports: [ProductsListComponent, ResumeComponent],
+  //imports: [ProductsListComponent, ResumeComponent],
   templateUrl: './cart-page.component.html',
   styleUrl: './cart-page.component.css'
 })

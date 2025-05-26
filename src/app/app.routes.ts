@@ -32,7 +32,7 @@ export const routes: Routes = [
     { 
         path: 'perfil/user/:userId', 
         component: UserComponent, 
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [IsClienteOrDonoGuard]
     },
     { 
         path: 'perfil/user/:userId/changePassword', 
