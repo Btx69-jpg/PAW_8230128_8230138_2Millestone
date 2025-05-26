@@ -13,7 +13,7 @@ import { environment } from '../../../../enviroments/enviroment';
   templateUrl: './dados-user.component.html',
   styleUrls: ['./dados-user.component.css']
 })
-export class DadosUserComponent implements OnInit {
+export class DadosUserComponent {
   @Input() user: User = {} as User;
 
   constructor(public userRest: UserService, private route: ActivatedRoute, private router: Router) {
@@ -24,9 +24,4 @@ export class DadosUserComponent implements OnInit {
       ? `${environment.apiUrl}${this.user.perfil.perfilPhoto}`
       : '/assets/img/no-image.png';
   }
-
-  ngOnInit(): void {
-    console.log("Foto do utilizador:", this.user?.perfil?.perfilPhoto);
-  }
-  
 }

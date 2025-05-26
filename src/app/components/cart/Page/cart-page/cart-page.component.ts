@@ -13,7 +13,7 @@ export class CartPageComponent implements OnInit{
   cart: Order[] = []
 
   ngOnInit(): void {
-      this.carregarCart();
+    this.carregarCart();
   }
 
   private carregarCart() {

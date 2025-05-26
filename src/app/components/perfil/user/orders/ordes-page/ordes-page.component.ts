@@ -19,9 +19,9 @@ export class OrdersPageComponent {
   constructor(private orderService: OrderService, private route: ActivatedRoute,private router: Router) {}
   
   ngOnInit() {
-      console.log('ngOnInit chamado');
-  this.userId = this.route.snapshot.params['userId'];
-  console.log('userId carregado:', this.userId);
+    console.log('ngOnInit chamado');
+    this.userId = this.route.snapshot.params['userId'];
+    console.log('userId carregado:', this.userId);
     this.carregarOrders();
   }
 
@@ -36,12 +36,30 @@ export class OrdersPageComponent {
   } 
 
   filtrar(filtro: FiltroEncomenda) {
-    this.orderService.searchOrders(this.userId).subscribe({
+    console.log("Filtro: ", filtro);
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: filtro,
+      queryParamsHandling: 'merge', 
+    });
+
+    this.orderService.searchOrders(this.userId, filtro).subscribe({
       next: (ordersDados: Order[]) => {
         this.orders = ordersDados;
+        console.log("Novas encomendas: ", ordersDados);
       }, error: (error: HttpErrorResponse) => {
         console.error("Erro a carregar o utilizador", error);
       }
     })
+  }
+
+  clear() {
+    console.log("Limpar filtro")
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {},
+    });
+    this.carregarOrders();
   }
 }

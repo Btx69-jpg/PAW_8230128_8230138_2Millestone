@@ -16,12 +16,18 @@ export class OrdersListaComponent {
 
   @Output() atualizarLista = new EventEmitter<void>();
   @Output() filtraLista = new EventEmitter<FiltroEncomenda>();
-
+  @Output() clearAllOrders = new EventEmitter<void>();
+  
   notificarPai() {
     this.atualizarLista.emit();
   }
 
   onFiltroRecebido(filtro: FiltroEncomenda) {
     this.filtraLista.emit(filtro);
+  }
+
+  onClearFiltro() {
+    console.log("Lista recebeu filtro")
+    this.clearAllOrders.emit();
   }
 }

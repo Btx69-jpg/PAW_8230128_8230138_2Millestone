@@ -4,6 +4,7 @@
         <app-ordes-lista [orders]="orders" 
             [userId]="userId"
             (atualizarLista)="carregarOrders()"
-            (filtraLista)="filtrar($event)"></app-ordes-lista>
+            (filtraLista)="filtrar($event)"
+            (clearAllOrders)="clear()"></app-ordes-lista>
     </div>
 </div>

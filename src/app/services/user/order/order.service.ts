@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Order } from '../../../model/order/order';
+import { FiltroEncomenda } from '../../../components/perfil/user/orders/search-orders/search-orders.component';
 
 const endPoint = 'http://localhost:3000/api/v1/user';
 
@@ -28,12 +29,10 @@ export class OrderService {
   /**
    * * Permite filtrar pelas encomendas do utilizador
    */
-  searchOrders(userId: string, filters?: {
-    nameRest?: string;
-    status?: 'all' | 'Pendente' | 'Expedida';
-  }): Observable<Order[]> {
+  searchOrders(userId: string, filters: FiltroEncomenda): Observable<Order[]> {
     let params = new HttpParams();
 
+    console.log("Filtros do service", filters)
     if (filters) {
       if (filters.nameRest) {
         params = params.set('nameRest', filters.nameRest);
@@ -43,7 +42,7 @@ export class OrderService {
         params = params.set('status', filters.status);
       }
     }
-    return this.http.get<Order[]>(`${endPoint}/${userId}/orders/search`);
+    return this.http.get<Order[]>(`${endPoint}/${userId}/orders/search`, { params });
   }
 
   /**

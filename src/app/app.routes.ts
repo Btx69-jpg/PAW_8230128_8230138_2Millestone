@@ -31,7 +31,7 @@ export const routes: Routes = [
     { 
         path: 'perfil/user/:userId', 
         component: UserComponent, 
-        //canActivate: [AuthGuard]
+        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     { 
         path: 'perfil/user/:userId/changePassword', 
@@ -58,7 +58,7 @@ export const routes: Routes = [
         component: HistoricOrdersComponent,
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
-        { 
+    { 
         path: 'perfil/user/:userId/historicOrder/:orderId', 
         component: HistoricDadosComponent,
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
