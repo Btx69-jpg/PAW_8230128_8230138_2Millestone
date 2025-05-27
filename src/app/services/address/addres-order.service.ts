@@ -29,8 +29,6 @@ export class AddresOrderService {
 
   /**
    * * Post para criar uma nova morada
-   * 
-   * !Ver se está bem (Testar)
    */
   postAddressOrder(userId: String, newAddress: newAddressOrder): Observable<HttpResponse<newAddressOrder>> {
     return this.http.post<newAddressOrder>(`${endPoint}/${userId}/addresses`, newAddress, httpOptions);

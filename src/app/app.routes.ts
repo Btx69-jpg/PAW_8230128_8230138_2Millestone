@@ -20,6 +20,8 @@ import { OrdersPageComponent } from './components/perfil/user/orders/ordes-page/
 import { ShowOrderComponent } from './components/perfil/historic-orders/show-order/show-order.component';
 import { OrderDetailsComponent } from './components/perfil/user/orders/order-details/order-details.component';
 import { CartPageComponent } from './components/cart/Page/cart-page/cart-page.component';
+import { AddCommentComponent } from './components/perfil/historic-orders/comments/add-comment/add-comment.component';
+import { PageCommentComponent } from './components/perfil/historic-orders/comments/page-comment/page-comment.component';
 
 /**
  * Isto é os routes que tinha no express
@@ -58,6 +60,10 @@ export const routes: Routes = [
         path: 'perfil/user/:userId/historicOrder', 
         component: HistoricOrdersComponent,
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+    },
+    {
+        path: 'perfil/user/:userId/historicOrder/createComment',
+        component: PageCommentComponent
     },
     { 
         path: 'perfil/user/:userId/historicOrder/:orderId', 
