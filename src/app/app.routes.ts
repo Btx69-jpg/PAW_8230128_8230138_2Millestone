@@ -21,7 +21,6 @@ import { ShowOrderComponent } from './components/perfil/historic-orders/show-ord
 import { OrderDetailsComponent } from './components/perfil/user/orders/order-details/order-details.component';
 import { CartComponent } from './components/cart/cart/cart.component';
 import { CheckoutComponent } from './components/cart/checkout/checkout.component';
-import { CartPageComponent } from './components/cart/Page/cart-page/cart-page.component';
 import { AddCommentComponent } from './components/perfil/historic-orders/comments/add-comment/add-comment.component';
 import { PageCommentComponent } from './components/perfil/historic-orders/comments/page-comment/page-comment.component';
 
