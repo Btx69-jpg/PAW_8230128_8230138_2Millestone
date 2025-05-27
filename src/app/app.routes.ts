@@ -20,6 +20,7 @@ import { OrdersPageComponent } from './components/perfil/user/orders/ordes-page/
 import { ShowOrderComponent } from './components/perfil/historic-orders/show-order/show-order.component';
 import { OrderDetailsComponent } from './components/perfil/user/orders/order-details/order-details.component';
 import { CartComponent } from './components/cart/cart/cart.component';
+import { CheckoutComponent } from './components/cart/checkout/checkout.component';
 
 /**
  * Isto é os routes que tinha no express
@@ -82,6 +83,11 @@ export const routes: Routes = [
     {
         path: 'checkOut/:userId',
         component: CartComponent,
+        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+    },
+    {
+        path: 'checkOut/:userId/delivery',
+        component: CheckoutComponent,
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
     }
 ];
