@@ -1,12 +1,13 @@
-<div *ngIf="visible" 
-    class="fixed bottom-6 right-6 p-4 min-w-[300px] rounded-lg shadow-lg text-white transition-opacity duration-500"
-    [ngClass]="{
-        'bg-green-600': type === 'success',
-        'bg-red-600': type === 'error',
-        'bg-blue-600': type === 'info'
-    }">
-    <div class="flex justify-between items-center">
-        <span class="text-sm font-medium">{{ message }}</span>
-        <button (click)="close()" class="ml-4 text-white hover:opacity-75">&times;</button>
-    </div>
+<div *ngIf="visible" class="toast" [ngClass]="type" [class.fade-out]="!visible">
+  <div class="toast-content">
+    <span class="toast-icon">
+      <ng-container [ngSwitch]="type">
+        <span *ngSwitchCase="'success'">✔️</span>
+        <span *ngSwitchCase="'error'">❌</span>
+        <span *ngSwitchCase="'info'">ℹ️</span>
+      </ng-container>
+    </span>
+    <span class="toast-message">{{ message }}</span>
+    <button (click)="close()" class="toast-close" aria-label="Fechar toast">&times;</button>
+  </div>
 </div>

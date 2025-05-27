@@ -1,0 +1,21 @@
+<div class="layout">
+    <app-nav-bar [userId]="userId"></app-nav-bar>
+    <div class="content-wrapper">
+        <h2>{{ isEditMode ? 'Editar Comentário' : 'Criar Comentário' }}</h2>
+        <h5 class="text-muted">{{ restName }}, pedido: {{ orderId }}</h5>
+        <p><strong>Data do pedido:</strong> {{ orderDate }}</p>
+
+        <app-add-comment *ngIf="!isEditMode"
+            [orderId]="orderId"
+            [restName]="restName"
+            [orderDate]="orderDate">
+        </app-add-comment>
+
+        <app-edit-comment *ngIf="isEditMode && existingComment !== '' "
+            [orderId]="orderId"
+            [restName]="restName"
+            [orderDate]="orderDate"
+            [existingComment]="existingComment">
+        </app-edit-comment>
+    </div>
+</div>

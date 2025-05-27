@@ -6,10 +6,8 @@ import { UserService } from '../../../services/user/user.service';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { DadosUserComponent } from './dados-user/dados-user.component';
 import { Title } from '@angular/platform-browser';
-import { loadStripe } from '@stripe/stripe-js';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../enviroments/enviroment';
 import { StripeService } from '../../../services/Stripe/stripe-services.service';
+
 @Component({
   standalone: true,
   selector: 'app-user',
@@ -20,7 +18,8 @@ import { StripeService } from '../../../services/Stripe/stripe-services.service'
 export class UserComponent implements OnInit {
   user: User = {} as User;
 
-  constructor(private stripeService:StripeService, private titleService: Title, public userRest: UserService, private route: ActivatedRoute,private router: Router) {}
+  constructor(private stripeService:StripeService,
+    private titleService: Title, public userRest: UserService, private route: ActivatedRoute,private router: Router) {}
 
   ngOnInit(): void {
     this.titleService.setTitle('Perfil');
@@ -45,7 +44,8 @@ export class UserComponent implements OnInit {
 
   //Teste Checkout
   checkout() {
-    this.stripeService.redirectToCheckout();
+    const idTemp = this.route.snapshot.params['userId'];
+    this.stripeService.redirectToCheckout(idTemp.toString());
   }
 
 }

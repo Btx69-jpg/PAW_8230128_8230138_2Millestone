@@ -34,6 +34,13 @@ export class UserService {
   }
 
   /**
+   * * Verifica se o user está ou não banido de realizar encomendas
+   * */
+  getIsUserBannedOrder(userId: String): Observable<boolean> {
+    return this.http.get<boolean>(`${endPoint}/${userId}/isBanOrder`);
+  }
+
+  /**
    * * Atualiza os dados do utilizador
    * */
   putUser(userId: String, formData: FormData ): Observable<UpdateUserDados> {

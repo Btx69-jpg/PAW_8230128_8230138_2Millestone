@@ -1,25 +1,36 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, GuardResult, MaybeAsync, Router, RouterStateSnapshot } from "@angular/router";
-import { CookieService } from "ngx-cookie-service";
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { AuthService } from '../services/cokkies/cookies-service.service';
 
 @Injectable({ providedIn: 'root'}) 
 export class AuthGuard implements CanActivate {
 
-    constructor(private cookieService: CookieService, private router: Router) {}
+    constructor(private authService: AuthService, private router: Router) {}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const hasToken = this.cookieService.check('auth_token');
-        const hasPriority = this.cookieService.check('priority');
-        if (hasToken && hasPriority) {
-            console.log("Está valido!");
-            return true;
-        }
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+        const routeUserId = route.paramMap.get('userId');
+        return this.authService.checkAut().pipe(
+            map((res) => {
+                if (res.isAuth && res.userId === routeUserId) {
+                    console.log('Utilizador autenticado:', res.userId);
+                    return true;
+                } else {
+                    console.warn('Acesso negado: ID diferente ou não autenticado');
+                    if (typeof window !== 'undefined') {
+                        window.location.href = 'http://localhost:3000';
+                    }
 
-        //Testar
-        if (typeof window !== 'undefined') {
-            window.location.href = 'http://localhost:3000/login';
-        }  
-        console.log("Token Invalido")
-        return false;
+                    return false;
+                }
+            }),
+            catchError(() => {
+                if (typeof window !== 'undefined') {
+                    window.location.href = 'http://localhost:3000';
+                }
+                return of(false);
+            })
+        );
     }
 }

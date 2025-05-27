@@ -1,0 +1,16 @@
+<div class="container mt-4">
+    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="mt-4">
+        <div class="mb-3">
+            <label for="comment" class="form-label">Comentário</label>
+            <textarea formControlName="comment" id="comment" class="form-control" rows="5"
+                placeholder="Escreva o seu comentário aqui..."></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Foto (opcional)</label>
+            <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submeter Comentário</button>
+    </form>
+</div>

@@ -13,12 +13,14 @@ export class Order {
     price: number;
     status: 'Pendente' | 'Expedida' | 'Entregue';
     type: 'delivery' | 'pickup';
+    comment: string;
+    commentPhoto: string;
 
     constructor(
         _id: string, date: Date, client: FaturaCliente, restaurant: FaturaRestaurant, 
-        addressOrder: AddressOrder, itens: Item[],price: number,
+        addressOrder: AddressOrder, itens: Item[], price: number,
         status: 'Pendente' | 'Expedida' | 'Entregue' = 'Pendente',
-        type: 'delivery' | 'pickup') {
+        type: 'delivery' | 'pickup', comment: string, commentPhoto: string) {
         this._id = _id;
         this.date = date;
         this.client = client;
@@ -28,7 +30,8 @@ export class Order {
         this.price = price;
         this.status = status;
         this.type = type;
-
+        this.comment = comment;
+        this.commentPhoto = commentPhoto;
         // validações
         this.validateClient();
         this.validateRestaurant();

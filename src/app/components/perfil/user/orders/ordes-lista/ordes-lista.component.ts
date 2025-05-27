@@ -13,6 +13,7 @@ import { FiltroEncomenda, SearchOrdersComponentPerfilUser } from '../search-orde
 export class OrdersListaComponent {
   @Input() orders!: Order[];
   @Input() userId!: string;
+  @Input() isBaned: boolean = false;
 
   @Output() atualizarLista = new EventEmitter<void>();
   @Output() filtraLista = new EventEmitter<FiltroEncomenda>();
