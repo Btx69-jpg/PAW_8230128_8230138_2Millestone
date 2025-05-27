@@ -12,13 +12,10 @@
                             <h6>{{ order.date }}</h6>
                             <h6>{{ order.status }}</h6>
 
-                            <!-- Botão para ver detalhes da encomenda -->
                             <button class="btn btn-outline-primary btn-sm my-2" (click)="showOrder(order._id)">
                                 Ver Menu
                             </button>
 
-                            <!-- Lógica para mostrar comentários (pickup) -->
-                            <!-- Lógica para mostrar comentários (pickup) -->
                             <div *ngIf="order.type === 'pickup'">
                                 <ng-container *ngIf="order.comment && order.comment.trim().length > 0; else addCommentTemplate">
                                     <div class="d-flex gap-2 mt-2">
@@ -31,7 +28,6 @@
                                     </div>
                                 </ng-container>
 
-                                <!-- 🔁 nome alterado aqui -->
                                 <ng-template #addCommentTemplate>
                                         <button class="btn btn-success btn-sm mt-2" (click)="addComment(order)">
                                             Adicionar Comentário

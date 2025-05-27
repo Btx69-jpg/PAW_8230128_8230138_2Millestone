@@ -93,7 +93,7 @@ export const routes: Routes = [
     },
     {
         path: 'checkOut/:userId/delivery',
-        component: CheckoutComponent,
+        component: CheckoutComponent
         //canActivate: [AuthGuard, IsClienteOrDonoGuard]
     }
 ];

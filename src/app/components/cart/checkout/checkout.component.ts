@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CheckOutService } from '../../../services/user/checkOut/check-out.service';
 import { Order } from '../../../model/order/order';
 import { Location } from '@angular/common';
 import { CommonModule } from '@angular/common';
@@ -13,10 +12,7 @@ import { AddressOrder } from '../../../model/order/address-order';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-    imports: [
-    CommonModule,    // *ngIf, *ngFor, pipes
-    FormsModule      // se usar ngModel
-  ],
+  imports: [CommonModule, FormsModule],
   styleUrl: './checkout.component.css'
 })
 export class CheckoutComponent implements OnInit {
@@ -52,7 +48,7 @@ export class CheckoutComponent implements OnInit {
     this.router.navigate(['/checkout/payment', this.route.snapshot.params['userId']]);
   }
 
-    goBack() {
+  goBack() {
     this.location.back();
   }
 

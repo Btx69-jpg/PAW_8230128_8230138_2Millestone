@@ -3,6 +3,7 @@ import { Order } from '../../../../model/order/order';
 import { HistoricOrderService } from '../../../../services/historicOrder/historic-order.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommentService } from '../../../../services/comments/comment-service.service';
 
 @Component({
   selector: 'app-lista-historic-order',
@@ -14,7 +15,7 @@ export class ListaHistoricOrderComponent implements OnInit {
   @Input() historicOrder: Order[] = [];
   userId: string = "";
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router, private commentService: CommentService) {}
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get('userId')!;
@@ -44,7 +45,13 @@ export class ListaHistoricOrderComponent implements OnInit {
   }
 
   deleteComment(orderId: string): void {
-    // Confirmar e apagar comentário
-    console.log('Apagar comentário de:', orderId);
+    this.commentService.deleteComment(this.userId, orderId).subscribe({
+      next: () => {
+        console.log("Comentario eliminado com sucesso")
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
   }
 }

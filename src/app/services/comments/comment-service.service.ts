@@ -25,4 +25,10 @@ export class CommentService {
     return this.http.post<void>(`${endPoint}/${userId}/historicOrder/createComment`, formData);
   }
 
+  /**
+   * * Permite eliminar um comentario.
+   */
+  deleteComment(userId: String, orderId: String): Observable<void> {
+    return this.http.delete<void>(`${endPoint}/${userId}/historicOrder/${orderId}`);
+  }
 }
