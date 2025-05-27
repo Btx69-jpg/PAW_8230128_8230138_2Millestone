@@ -64,6 +64,7 @@ export class CartComponent implements OnInit {
 
   proceedToCheckout(cart: Order) {
   if (cart) {
+    console.log('Proceeding to checkout with cart:', cart);
     const idTemp = this.route.snapshot.params['userId'];
     this.cartService.save(idTemp, cart).subscribe(() => {
       this.goToCheckoutDelivery();
