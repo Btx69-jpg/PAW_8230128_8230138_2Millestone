@@ -8,11 +8,11 @@ export class User {
     lastName: string;
     perfil: Perfil;
     addresses: AddressOrder[];
-    cart?: Order[];
+    cart: Order;
     birthdate?: Date;
 
     constructor(_id: string, firstName: string, lastName: string, perfil: Perfil,
-        addresses: AddressOrder[], cart: Order[] = [], birthdate?: Date) {
+        addresses: AddressOrder[], cart: Order, birthdate?: Date) {
         this._id = _id;
         this.firstName = firstName;
         this.lastName = lastName;

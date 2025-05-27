@@ -1,0 +1,136 @@
+<div class="container py-4">
+  <h2 class="mb-4">ENTREGA</h2>
+
+<ng-container *ngIf=" user && user.cart && user.cart.itens != null && user.cart.itens.length; else emptyCart">
+
+  <div class="row">
+    <!-- Opções de entrega -->
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <p>Por favor, escolhe se pretendes receber a tua encomenda numa morada ou levantar numa loja.</p>
+
+          <div class="d-flex gap-4">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="homeDelivery" name="deliveryOption"
+                [(ngModel)]="selectedOption" value="home">
+              <label class="form-check-label" for="homeDelivery">
+                <i class="bi bi-truck"></i> Desejo receber a encomenda numa morada
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="storePickup" name="deliveryOption"
+                [(ngModel)]="selectedOption" value="store">
+              <label class="form-check-label" for="storePickup">
+                <i class="bi bi-shop"></i> Desejo levantar a encomenda em loja
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seleção de morada ou loja fictícia -->
+      <div class="card">
+        <div class="card-body">
+          <h5>Onde devemos entregar a encomenda?</h5>
+          <div *ngIf="selectedOption === 'home'">
+            <p>{{user.firstName}}</p>
+                <div *ngIf="user.addresses && user.addresses.length > 0; else noAddresses">
+<div class="row">
+  <div class="col-md-6 mb-3" *ngFor="let address of user.addresses">
+    <div
+      class="card h-100"
+      [ngClass]="{
+        'border-danger border-2': selectedAddressId === address._id,
+        'border-secondary': selectedAddressId !== address._id
+      }"
+      (click)="selectAddress(address._id)"
+      style="cursor: pointer;"
+    >
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h6 class="card-title">{{ user.firstName }} {{ user.lastName }}</h6>
+            <p class="mb-0">{{ address.address.street }}</p>
+            <p class="mb-0">{{ address.address.postal_code }} {{ address.address.city }}</p>
+            <p *ngIf="address.nif">NIF: {{ address.nif }}</p>
+          </div>
+          <i class="bi bi-check-circle-fill text-success" *ngIf="selectedAddressId === address._id"></i>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <button
+            *ngIf="selectedAddressId !== address._id"
+            class="btn btn-link text-danger p-0"
+            (click)="selectAddress(address._id); $event.stopPropagation()"
+          >
+            Selecionar este endereço
+          </button>
+          <button class="btn btn-link p-0" (click)="editAddress(address); $event.stopPropagation()">
+            <i class="bi bi-pencil text-primary"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div>
+                <ng-template #noAddresses>
+                  <div class="alert alert-info">
+                    Não tem moradas associadas.
+                  </div>
+                  <button class="btn btn-primary" id="OrangeButton" (click)="goBack()">Adicionar morada</button>
+                </ng-template>
+            <!-- Aqui pode ir uma lista de moradas ou um formulário -->
+          </div>
+          <div *ngIf="selectedOption === 'store'">
+            <p class="mb-1">Proceda ao pagamento</p>
+            <!-- Lista de lojas (pode ser mock) -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumo -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+        <ng-container *ngIf="user.cart.price">
+          <h5>Resumo dos Pedidos</h5>
+          <p>Produtos: {{ user.cart.itens.length }}</p>
+          <p>Subtotal: € {{ user.cart.price | number:'1.2-2' }}</p>
+          <p>IVA (23%): € {{ user.cart.price * 0.23 | number:'1.2-2' }}</p>
+          <hr>
+          <p><strong>TOTAL: € {{ user.cart.price * 1.23 | number:'1.2-2' }}</strong></p>
+        </ng-container>
+        </div>
+      </div>
+
+      <div class="card mt-3" *ngIf="user.cart?.itens?.length">
+        <div class="card-body">
+          <h6>Detalhes do Pedido</h6>
+          <div *ngFor="let item of user.cart?.itens" class="d-flex align-items-center mb-2">
+            <img src="assets/imgs/product-placeholder.png" width="50" class="me-2">
+            <div>
+              <div>{{ item.item }}</div>
+              <div class="text-muted small">{{ item.portion }}</div>
+              <div class="text-danger fw-bold">€ {{ item.price | number:'1.2-2' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary w-100 mt-3" (click)="goToPayment()">Avançar para o Pagamento</button>
+    </div>
+  </div>
+  </ng-container>
+
+    <ng-template #emptyCart>
+    <div class="alert alert-info">
+      Não há itens no carrinho no momento.
+    </div>
+    <button class="btn btn-primary" id="OrangeButton" (click)="goBack()">Voltar aos Produtos</button>
+  </ng-template>
+</div>
