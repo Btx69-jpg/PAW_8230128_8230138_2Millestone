@@ -57,6 +57,20 @@ export class CartComponent implements OnInit {
     this.location.back();
   }
 
+  goToCheckoutDelivery() {
+    const userId = this.route.snapshot.params['userId'];
+    this.router.navigate([`delivery`], { relativeTo: this.route});
+  }
+
+  proceedToCheckout(cart: Order) {
+  if (cart) {
+    const idTemp = this.route.snapshot.params['userId'];
+    this.cartService.save(idTemp, cart).subscribe(() => {
+      this.goToCheckoutDelivery();
+    });
+  }
+}
+
   saveCart(cart: Order) {
     if (cart) {
         const idTemp = this.route.snapshot.params['userId'];

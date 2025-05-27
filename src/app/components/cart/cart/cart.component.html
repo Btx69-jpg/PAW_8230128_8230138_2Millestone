@@ -56,7 +56,7 @@
             <p><strong>Total:</strong>
                <span class="float-end">€ {{ (cart.price * 1.23) | number:'1.2-2' }}</span></p>
 
-            <button class="btn btn-primary w-100" id="OrangeButton">Avançar para o Checkout</button>
+            <button class="btn btn-primary w-100" id="OrangeButton" (click)="proceedToCheckout(cart)">Avançar para o Checkout</button>
           </div>
         </div>
       </div>

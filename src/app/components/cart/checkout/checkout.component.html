@@ -36,16 +36,52 @@
           <h5>Onde devemos entregar a encomenda?</h5>
           <div *ngIf="selectedOption === 'home'">
             <p>{{user.firstName}}</p>
-                <ng-container *ngIf=" user.addresses; else noAdresses">
-                    <tr *ngFor="let address of user.addresses">
-                        <p class="mb-1"> {{user.firstName}} {{user.lastName}}</p>
-                    </tr>
-                </ng-container>
-                <ng-template #noAdresses>
-                    <div class="alert alert-info">
-                        Não tem moradas associadas.
-                    </div>
-                    <button class="btn btn-primary" id="OrangeButton" (click)="goBack()">Adicionar morada</button>
+                <div *ngIf="user.addresses && user.addresses.length > 0; else noAddresses">
+<div class="row">
+  <div class="col-md-6 mb-3" *ngFor="let address of user.addresses">
+    <div
+      class="card h-100"
+      [ngClass]="{
+        'border-danger border-2': selectedAddressId === address._id,
+        'border-secondary': selectedAddressId !== address._id
+      }"
+      (click)="selectAddress(address._id)"
+      style="cursor: pointer;"
+    >
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h6 class="card-title">{{ user.firstName }} {{ user.lastName }}</h6>
+            <p class="mb-0">{{ address.address.street }}</p>
+            <p class="mb-0">{{ address.address.postal_code }} {{ address.address.city }}</p>
+            <p *ngIf="address.nif">NIF: {{ address.nif }}</p>
+          </div>
+          <i class="bi bi-check-circle-fill text-success" *ngIf="selectedAddressId === address._id"></i>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <button
+            *ngIf="selectedAddressId !== address._id"
+            class="btn btn-link text-danger p-0"
+            (click)="selectAddress(address._id); $event.stopPropagation()"
+          >
+            Selecionar este endereço
+          </button>
+          <button class="btn btn-link p-0" (click)="editAddress(address); $event.stopPropagation()">
+            <i class="bi bi-pencil text-primary"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+                </div>
+                <ng-template #noAddresses>
+                  <div class="alert alert-info">
+                    Não tem moradas associadas.
+                  </div>
+                  <button class="btn btn-primary" id="OrangeButton" (click)="goBack()">Adicionar morada</button>
                 </ng-template>
             <!-- Aqui pode ir uma lista de moradas ou um formulário -->
           </div>

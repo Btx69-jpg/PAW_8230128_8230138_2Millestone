@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../../../model/perfil/user';
 import { UserService } from '../../../services/user/user.service';
 import { Title } from '@angular/platform-browser';
-
+import { AddressOrder } from '../../../model/order/address-order';
 
 @Component({
   selector: 'app-checkout',
@@ -24,6 +24,8 @@ export class CheckoutComponent implements OnInit {
   cart: Order | null = null;
   user: User | null = null;
   selectedOption = 'home'; // 'home' ou 'store'
+  selectedAddressId: string | null = null;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -52,5 +54,15 @@ export class CheckoutComponent implements OnInit {
 
     goBack() {
     this.location.back();
+  }
+
+  selectAddress(addressId: string) {
+  this.selectedAddressId = addressId;
+  // Aqui também podes atualizar o endereço de entrega no `cart`, se necessário
+  }
+
+  editAddress(address: AddressOrder) {
+    // Abre modal ou navega para página de edição
+    console.log('Editar endereço:', address);
   }
 }
