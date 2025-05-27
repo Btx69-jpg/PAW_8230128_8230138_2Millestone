@@ -43,7 +43,7 @@ export class CartComponent implements OnInit {
         }
       }
     }
-    // Recalcular o preço total do carrinho
+ 
     cart.price = cart.itens.reduce((total, i) => total + (i.price * i.quantity), 0);
     this.cart = cart;
   }
@@ -57,17 +57,21 @@ export class CartComponent implements OnInit {
     this.location.back();
   }
 
-  goToCheckoutDelivery() {
-    const userId = this.route.snapshot.params['userId'];
+  private goToCheckoutDelivery(): void {
+    console.log("Go to Checkout");
     this.router.navigate([`delivery`], { relativeTo: this.route});
   }
 
   proceedToCheckout(cart: Order) {
   if (cart) {
-    console.log('Proceeding to checkout with cart:', cart);
     const idTemp = this.route.snapshot.params['userId'];
-    this.cartService.save(idTemp, cart).subscribe(() => {
-      this.goToCheckoutDelivery();
+    this.cartService.save(idTemp, cart).subscribe({
+      next: () => {
+        this.goToCheckoutDelivery();
+      },
+      error: (error) => {
+        console.error(error);
+      }
     });
   }
 }
