@@ -34,20 +34,36 @@ export class ListaHistoricOrderComponent implements OnInit {
         state: {
           orderId: order._id,
           restName: order.restaurant.name,
-          orderDate: order.date
+          orderDate: order.date,
         }
       });
   }
 
-  editComment(orderId: string): void {
-    // Abrir modal ou redirecionar para editar
-    console.log('Editar comentário de:', orderId);
+  editComment(order: Order): void {
+    this.userId = this.route.snapshot.paramMap.get('userId')!;
+
+    this.router.navigate(
+      [`/perfil/user/${this.userId}/historicOrder/editComment`],
+      {
+        state: {
+          orderId: order._id,
+          restName: order.restaurant.name,
+          orderDate: order.date,
+          existingComment: order.comment
+        }
+      });
   }
 
   deleteComment(orderId: string): void {
     this.commentService.deleteComment(this.userId, orderId).subscribe({
       next: () => {
-        console.log("Comentario eliminado com sucesso")
+        const order = this.historicOrder.find(o => o._id === orderId);
+
+        if (order) {
+          order.comment = '';
+          order.commentPhoto = '';
+        }
+        console.log("Comentário eliminado com sucesso");
       },
       error: (error) => {
         console.log(error);

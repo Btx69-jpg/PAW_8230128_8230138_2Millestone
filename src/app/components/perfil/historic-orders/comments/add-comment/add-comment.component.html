@@ -11,6 +11,14 @@
             <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
         </div>
 
-        <button type="submit" class="btn btn-primary">Submeter Comentário</button>
+        <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-outline-secondary" (click)="goBack()" title="Voltar à página anterior">
+                <i class="bi bi-arrow-left-circle me-1"></i> Voltar
+            </button>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-send me-1"></i> Submeter Comentário
+            </button>
+        </div>
     </form>
 </div>

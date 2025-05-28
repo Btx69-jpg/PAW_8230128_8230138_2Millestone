@@ -35,66 +35,72 @@ export const routes: Routes = [
     { 
         path: 'perfil/user/:userId', 
         component: UserComponent, 
-        canActivate: [IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     { 
         path: 'perfil/user/:userId/changePassword', 
         component: ChangePasswordComponent,
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     { 
         path: 'perfil/user/:userId/editUser', 
         component: EditUserPageComponent,
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     {
         path: 'perfil/user/:userId/orders',
         component: OrdersPageComponent,
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     {
         path: 'perfil/user/:userId/orders/showOrder/:orderId',
         component: OrderDetailsComponent,
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     { 
         path: 'perfil/user/:userId/historicOrder', 
         component: HistoricOrdersComponent,
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     {
         path: 'perfil/user/:userId/historicOrder/createComment',
-        component: PageCommentComponent
+        component: PageCommentComponent,
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
+    },
+    {
+        path: 'perfil/user/:userId/historicOrder/editComment',
+        component: PageCommentComponent,
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     { 
         path: 'perfil/user/:userId/historicOrder/:orderId', 
         component: HistoricDadosComponent,
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     { 
         path: 'perfil/user/:userId/manageAddresses', 
         component: ManageAddressComponent,
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     {
         path: 'perfil/user/:userId/manageAddresses/edit/:addressId',
         component: EditAddressPageComponent,
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     {
         path: 'perfil/user/:userId/manageAddresses/adicionar',
         component: CreateAddressComponent,
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     {
         path: 'checkOut/:userId',
         component: CartComponent,
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     },
     {
         path: 'checkOut/:userId/delivery',
-        component: CheckoutComponent
-        //canActivate: [AuthGuard, IsClienteOrDonoGuard]
+        component: CheckoutComponent,
+        canActivate: [AuthGuard, IsClienteOrDonoGuard]
     }
 ];
 

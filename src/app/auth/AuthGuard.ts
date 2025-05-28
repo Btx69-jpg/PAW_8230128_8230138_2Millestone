@@ -9,28 +9,34 @@ export class AuthGuard implements CanActivate {
 
     constructor(private authService: AuthService, private router: Router) {}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        const routeUserId = route.paramMap.get('userId');
-        return this.authService.checkAut().pipe(
-            map((res) => {
-                if (res.isAuth && res.userId === routeUserId) {
-                    console.log('Utilizador autenticado:', res.userId);
-                    return true;
-                } else {
-                    console.warn('Acesso negado: ID diferente ou não autenticado');
-                    if (typeof window !== 'undefined') {
-                        window.location.href = 'http://localhost:3000';
+    canActivate(): Observable<boolean> {
+        return new Observable<boolean>((observer) => {
+            this.authService.checkAut().subscribe({
+                next: (authRes) => {
+                    if (authRes.isAuth) {
+                        observer.next(true);
+                    } else {
+                        this.redirectFallback();
+                        observer.next(false);
                     }
+                    observer.complete();
+                },
+                error: () => {
+                    this.redirectFallback();
+                    observer.next(false);
+                    observer.complete();
+                }
+            });
+        });
+    }
 
-                    return false;
-                }
-            }),
-            catchError(() => {
-                if (typeof window !== 'undefined') {
-                    window.location.href = 'http://localhost:3000';
-                }
-                return of(false);
-            })
-        );
+    private redirectFallback(): void {
+        if (typeof window !== 'undefined') {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'http://localhost:3000';
+            }
+        }
     }
 }

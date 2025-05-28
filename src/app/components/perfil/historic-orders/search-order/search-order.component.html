@@ -1,64 +1,73 @@
-<!-- historic-search.component.html -->
-<div class="col-12 col-md-10 col-lg-8 mx-auto mb-4">
-    <form *ngIf="form" [formGroup]="form" (ngSubmit)="filtrar()" class="row g-3 justify-content-center">
-        <div class="col-md-4">
-            <label for="nameRest" class="form-label">Nome do Restaurante:</label>
-            <input
-            type="text"
-            id="nameRest"
-            class="form-control"
-            formControlName="nameRest"
-            placeholder="Nome do Restaurante"/>
-            <div *ngIf="form.get('nameRest')?.invalid && form.get('nameRest')?.touched" class="text-danger">
-                O campo do restaurante deve ter no máximo 100 caracteres e só pode ter letras e numeros
-            </div>
-        </div>
-        
-        <!-- Preço -->
-        <div class="col-md-4">
-            <label for="price" class="form-label">Preço:</label>
-            <input
-                type="number"
-                id="price"
-                class="form-control"
-                formControlName="price"
-                placeholder="Preço"
-                step="0.01" />
-                <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched" class="text-danger">
-                    O campo preço não pode ser negativo
-                </div>
-        </div>
+<div class="col-12 col-md-10 col-lg-8 mx-auto mb-5">
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="filtrar()" class="row g-4">
 
-        <!-- Data início -->
-        <div class="col-md-4">
-            <label for="dateFrom" class="form-label">Da data:</label>
-            <input
-                type="date"
-                id="dateFrom"
-                class="form-control"
-                formControlName="dateFrom"
-                placeholder="Introduza uma data"
-                [min]="'2000-01-01'"
-                [max]="form.get('dateTo')?.value"
-                />
-        </div>
+    <!-- Nome do Restaurante -->
+    <div class="col-md-6">
+      <label for="nameRest" class="form-label">Nome do Restaurante</label>
+      <input
+        type="text"
+        id="nameRest"
+        class="form-control"
+        formControlName="nameRest"
+        placeholder="Digite o nome do restaurante"
+        maxlength="100"
+      />
+      <div *ngIf="form.get('nameRest')?.invalid && form.get('nameRest')?.touched" class="form-text text-danger small">
+        O campo do restaurante deve ter no máximo 100 caracteres e só pode conter letras e números.
+      </div>
+    </div>
 
-        <!-- Data fim -->
-        <div class="col-md-4">
-            <label for="dateTo" class="form-label">Até data:</label>
-            <input
-                type="date"
-                id="dateTo"
-                class="form-control"
-                formControlName="dateTo"
-                placeholder="Introduza uma data"
-                [min]="form.get('dateFrom')?.value"/>
-        </div>
+    <!-- Preço -->
+    <div class="col-md-6">
+      <label for="price" class="form-label">Preço Máximo (€)</label>
+      <input
+        type="number"
+        id="price"
+        class="form-control"
+        formControlName="price"
+        placeholder="Ex: 15.00"
+        step="0.01"
+        min="0"
+      />
+      <div *ngIf="form.get('price')?.invalid && form.get('price')?.touched" class="form-text text-danger small">
+        O preço não pode ser negativo.
+      </div>
+    </div>
 
-        <div class="col-12 d-flex justify-content-center">
-            <button class="btn btn-secondary me-2" (click)="limparFiltro()">Clear</button>
-            
-            <button type="submit" class="btn btn-primary" (click)="filtrar()">Submeter</button>
-        </div>
-    </form>
+    <!-- Data início -->
+    <div class="col-md-6">
+      <label for="dateFrom" class="form-label">Data Inicial</label>
+      <input
+        type="date"
+        id="dateFrom"
+        class="form-control"
+        formControlName="dateFrom"
+        [min]="'2000-01-01'"
+        [max]="form.get('dateTo')?.value"
+      />
+    </div>
+
+    <!-- Data fim -->
+    <div class="col-md-6">
+      <label for="dateTo" class="form-label">Data Final</label>
+      <input
+        type="date"
+        id="dateTo"
+        class="form-control"
+        formControlName="dateTo"
+        [min]="form.get('dateFrom')?.value"
+      />
+    </div>
+
+    <!-- Botões -->
+    <div class="col-12 d-flex justify-content-center gap-3 pt-3">
+      <button type="button" class="btn btn-outline-secondary px-4" (click)="limparFiltro()" title="Limpar filtros">
+        <i class="bi bi-x-circle me-1"></i> Limpar
+      </button>
+
+      <button type="submit" class="btn btn-primary px-4" title="Filtrar encomendas">
+        <i class="bi bi-funnel-fill me-1"></i> Filtrar
+      </button>
+    </div>
+  </form>
 </div>

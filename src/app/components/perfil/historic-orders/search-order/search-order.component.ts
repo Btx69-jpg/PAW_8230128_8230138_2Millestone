@@ -13,6 +13,7 @@ import { Order } from '../../../../model/order/order';
 })
 export class SearchOrderComponent implements OnInit {
   @Output() filtroAplicado = new EventEmitter<Order[]>();
+  @Output() filtroApagado = new EventEmitter<void>();
   @Input() userId!: string;
   form!: FormGroup;
 
@@ -32,12 +33,13 @@ export class SearchOrderComponent implements OnInit {
   }
 
   limparFiltro() {
+    console.log("Limpar Filtro")
+    this.form.reset();
+    this.filtroApagado.emit();
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {},
-    });
-
-    this.form.reset();
+    }); 
   }
 
   //Realiza a filtragem dos dados

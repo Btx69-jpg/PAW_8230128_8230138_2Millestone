@@ -59,6 +59,7 @@ export class HistoricOrderService {
         params = params.set('order', filters.order);
       }
     }
+
     return this.http.get<Order[]>(`${endPoint}/${userId}/historicOrder/search`, { params });
   }
 

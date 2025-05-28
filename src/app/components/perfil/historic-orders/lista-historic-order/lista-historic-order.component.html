@@ -19,7 +19,7 @@
                             <div *ngIf="order.type === 'pickup'">
                                 <ng-container *ngIf="order.comment && order.comment.trim().length > 0; else addCommentTemplate">
                                     <div class="d-flex gap-2 mt-2">
-                                        <button class="btn btn-warning btn-sm" (click)="editComment(order._id)">
+                                        <button class="btn btn-warning btn-sm" (click)="editComment(order)">
                                             Editar Comentário
                                         </button>
                                         <button class="btn btn-danger btn-sm" (click)="deleteComment(order._id)">

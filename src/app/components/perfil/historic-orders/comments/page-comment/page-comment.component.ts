@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NavBarComponent } from '../../../user/nav-bar/nav-bar.component';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { EditCommentComponent } from '../edit-comment/edit-comment.component';
+import { stat } from 'fs';
 
 @Component({
   standalone: true,
@@ -17,6 +18,7 @@ export class PageCommentComponent {
   orderId!: string;
   restName!: string;
   orderDate!: Date;
+  comment!: String;
   isEditMode: boolean = false;
   existingComment: string = '';
 
@@ -28,6 +30,11 @@ export class PageCommentComponent {
     this.orderId = state.orderId;
     this.restName = state.restName;
     this.orderDate = state.orderDate;
+    this.comment = state.comment;
     this.existingComment = state.existingComment ?? '';
+
+    if(this.existingComment !== '') {
+      this.isEditMode = true;
+    }
   }
 }
