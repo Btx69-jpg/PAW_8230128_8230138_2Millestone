@@ -46,12 +46,21 @@ export class CheckoutComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('Perfil');
-    const idTemp = this.route.snapshot.params['userId'];
+  this.titleService.setTitle('Perfil');
+  const idTemp = this.route.snapshot.params['userId'];
 
-    this.userRest.getUser(idTemp).subscribe({
-      next: (dadosUser: User) => {
-        this.user = dadosUser;
+  this.userRest.getUser(idTemp).subscribe({
+    next: (dadosUser: User) => {
+      this.user = dadosUser;
+
+      // Verifica se o utilizador tem um carrinho e se tem itens
+      if (this.user.cart && this.user.cart.itens[0]) {
+        const restId = this.user.cart.itens[0].from;
+
+        // Verifica se é para criar ordem após pagamento
+        let shouldCreateOrder = false;
+        let checkoutOptions: any = null;
+
         this.route.queryParams.subscribe(params => {
           const paymentStatus = params['payment'];
           if (paymentStatus === 'success') {
@@ -60,34 +69,34 @@ export class CheckoutComponent implements OnInit {
               const { selectedOption, selectedAddressId, cart } = JSON.parse(options);
               this.selectedOption = selectedOption;
               this.selectedAddressId = selectedAddressId;
-              if (cart && this.user) this.user.cart = cart; // <-- restaurar o carrinho!
+              if (cart && this.user) this.user.cart = cart;
               localStorage.removeItem('checkoutOptions');
             }
-            this.handleOrderCreation();
+            shouldCreateOrder = true;
           }
         });
-        if (this.user.cart && this.user.cart.itens[0]) {
-          const restId = this.user.cart.itens[0].from;
-          this.CheckOutService.getRestaurant(restId).subscribe({
-            next: (restaurant: Restaurant) => {
-              this.restaurant = restaurant
-            },
-            error: (err) => {
-              console.error(
-                'Erro ao obter nome e endereço do restaurante',
-                err
-              );
-            },
-          });
-        } else {
-          this.restaurant = {} as Restaurant; // Inicializa como objeto vazio se não houver itens no carrinho
-        }
-      },
-      error: (err) => {
-        console.error('Erro a carregar o utilizador', err);
-      },
-    });
-  }
+
+        this.CheckOutService.getRestaurant(restId).subscribe({
+          next: (restaurant: Restaurant) => {
+            this.restaurant = restaurant;
+            // Só cria a ordem depois de ter o restaurante
+            if (shouldCreateOrder) {
+              this.handleOrderCreation();
+            }
+          },
+          error: (err) => {
+            console.error('Erro ao obter restaurante', err);
+          },
+        });
+      } else {
+        this.restaurant = {} as Restaurant;
+      }
+    },
+    error: (err) => {
+      console.error('Erro a carregar o utilizador', err);
+    },
+  });
+}
 
   goBack() {
     this.location.back();
