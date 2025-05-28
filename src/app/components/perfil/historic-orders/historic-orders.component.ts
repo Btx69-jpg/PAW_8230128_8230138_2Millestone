@@ -24,11 +24,16 @@ export class HistoricOrdersComponent implements OnInit {
       this.carregarHistorico();
     }
 
-    atualizarHistorico(orders: Order[]) {
+    atualizarHistorico(orders: Order[]): void {
       this.historicOrder = orders;
     }
+
+    clearFiltro(): void {
+      console.log("Filtro limpo")
+      this.carregarHistorico();
+    }
   
-    carregarHistorico() {
+    carregarHistorico(): void {
       this.historicService.getHistoricOrder(this.userId).subscribe({
         next: (orders: Order[]) => {
           this.historicOrder = orders;

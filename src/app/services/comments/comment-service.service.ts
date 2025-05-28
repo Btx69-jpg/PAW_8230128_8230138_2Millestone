@@ -26,6 +26,16 @@ export class CommentService {
   }
 
   /**
+   * * Permite a um utilizador atualizar um comentario
+   * 
+   * ? Por enquanto está como void ver se assim após o update o cometnario é atualizado
+   * ? Se não trocar para Order e depois atualizar após o service
+   */
+  putComment(userId: String, formData: FormData): Observable<void> {
+    return this.http.put<void>(`${endPoint}/${userId}/historicOrder/updateComment`, formData);
+  }
+
+  /**
    * * Permite eliminar um comentario.
    */
   deleteComment(userId: String, orderId: String): Observable<void> {

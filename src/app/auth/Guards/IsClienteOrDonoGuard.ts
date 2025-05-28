@@ -9,34 +9,16 @@ export class IsClienteOrDonoGuard implements CanActivate {
     constructor(private authService: AuthService, private router: Router) {}
 
     canActivate(): Observable<boolean> {
-    return new Observable<boolean>((observer) => {
-            // Primeiro passo: verificar se o utilizador está autenticado
-            this.authService.checkAut().subscribe({
-                next: (authRes) => {
-                    if (!authRes.isAuth) {
+        return new Observable<boolean>((observer) => {
+            this.authService.checkisDonoOrCliente().subscribe({
+                next: (role: string) => {
+                    if (role === 'Dono' || role === 'Cliente') {
+                        observer.next(true);
+                    } else {
                         this.redirectFallback();
                         observer.next(false);
-                        observer.complete();
-                        return;
                     }
-
-                    // Segundo passo: se autenticado, verificar a prioridade
-                    this.authService.checkisDonoOrCliente().subscribe({
-                        next: (role: string) => {
-                            if (role === 'Dono' || role === 'Cliente') {
-                                observer.next(true);
-                            } else {
-                                this.redirectFallback();
-                                observer.next(false);
-                            }
-                            observer.complete();
-                        },
-                        error: () => {
-                            this.redirectFallback();
-                            observer.next(false);
-                            observer.complete();
-                        }
-                    });
+                    observer.complete();
                 },
                 error: () => {
                     this.redirectFallback();
@@ -45,15 +27,15 @@ export class IsClienteOrDonoGuard implements CanActivate {
                 }
             });
         });
-      }
-    
-      private redirectFallback(): void {
+    }
+
+    private redirectFallback(): void {
         if (typeof window !== 'undefined') {
-          if (window.history.length > 1) {
-            window.history.back();
-          } else {
-            window.location.href = 'http://localhost:3000';
-          }
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'http://localhost:3000';
+            }
         }
-      }
+    }
 }

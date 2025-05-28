@@ -2,7 +2,9 @@
     <app-nav-bar [userId]="userId"></app-nav-bar>
     <div class="content-wrapper">
         <h3 class="mb-4">Histórico de Encomendas</h3>
-        <app-search-order [userId]="userId" (filtroAplicado)="atualizarHistorico($event)"></app-search-order>
+        <app-search-order [userId]="userId" 
+        (filtroAplicado)="atualizarHistorico($event)"
+        (filtroApagado)="clearFiltro()"></app-search-order>
         <app-lista-historic-order [historicOrder]="historicOrder"></app-lista-historic-order>
     </div>
 </div>
