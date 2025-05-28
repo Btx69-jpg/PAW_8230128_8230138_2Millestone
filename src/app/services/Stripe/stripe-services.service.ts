@@ -28,7 +28,7 @@ export class StripeService {
     }
 
     try {
-      const session = await this.http.post<{ id: string }>(`${endPoint}/create-checkout-session`, { userId }).toPromise();
+      const session = await this.http.post<{ id: string }>(`${endPoint}/create-checkout-session`, { userId }, ).toPromise();
 
       if (!session?.id) {
         throw new Error('Sessão de checkout inválida');
