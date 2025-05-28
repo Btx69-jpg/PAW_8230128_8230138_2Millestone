@@ -84,4 +84,22 @@ export class CartComponent implements OnInit {
       });
     }
   }
+
+  removeItem(index: number) {
+    if (this.cart && this.cart.itens) {
+      this.cart.itens.splice(index, 1);
+      // Atualiza o preço total
+      this.cart.price = this.cart.itens.reduce((total, i) => total + (i.price * i.quantity), 0);
+      // Salva o carrinho atualizado
+      const idTemp = this.route.snapshot.params['userId'];
+      this.cartService.save(idTemp, this.cart).subscribe(() => {
+        this.loadCart();
+      });
+    }
+  }
+
+  getTotalQuantity(): number {
+    if (!this.cart || !this.cart.itens) return 0;
+    return this.cart.itens.reduce((total, item) => total + item.quantity, 0);
+  }
 }

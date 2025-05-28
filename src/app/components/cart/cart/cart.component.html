@@ -1,10 +1,11 @@
-
 <div class="container py-4">
   <h1 class="mb-4">Carrinho de Compras</h1>
 
-  <ng-container *ngIf="cart && cart.itens != null && cart.itens.length; else emptyCart">
+  <ng-container
+    *ngIf="cart && cart.itens != null && cart.itens.length; else emptyCart"
+  >
     <div class="mb-3">
-      <strong>TOTAL ({{ cart.itens.length }} itens)</strong>
+      <strong>TOTAL ({{ getTotalQuantity() }} itens)</strong>
     </div>
     <div class="row">
       <!-- Lista de Produtos -->
@@ -15,30 +16,51 @@
             <table class="table align-middle">
               <thead>
                 <tr>
-                  <th>Artigo</th><th>Descrição</th><th>Preço</th><th>Qtd</th>
+                  <th>Artigo</th>
+                  <th>Descrição</th>
+                  <th>Preço Unitario</th>
+                  <th>Qtd</th>
+                  <th>Total</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of cart?.itens">
+                <tr *ngFor="let item of cart?.itens; let i = index">
                   <td>{{ item.item }}</td>
                   <td>{{ item.portion }}</td>
-                  <td>€ {{ item.price | number:'1.2-2' }}</td>
+                  <td>{{ item.price | number : "1.2-2" }}€</td>
                   <td>
                     <input
-                    #qty
-                    type="number"
-                    class="form-control form-control-sm"
-                    [value]="item.quantity"
-                    min="1"
-                    style="width: 60px;"
-                    (change)="onQuantityChange(cart,item, qty.valueAsNumber)"
+                      #qty
+                      type="number"
+                      class="form-control form-control-sm"
+                      [value]="item.quantity"
+                      min="1"
+                      style="width: 60px"
+                      (change)="onQuantityChange(cart, item, qty.valueAsNumber)"
                     />
+                  </td>
+                    <td> {{ item.price * item.quantity| number : "1.2-2" }}€</td>
+                  <td>
+                    <button
+                      class="btn btn-link text-danger p-0"
+                      title="Remover"
+                      (click)="removeItem(i)"
+                    >
+                      <i class="bi bi-trash"></i>
+                    </button>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <button class="btn btn-secondary" (click)="saveCart(cart); goBack()">Continuar a Comprar</button>
-            <button class="btn btn-outline-danger" (click)="clearCart()">Limpar Carrinho</button>
+            <button
+              class="btn btn-secondary"
+              (click)="saveCart(cart); goBack()"
+            >
+              Continuar a Comprar
+            </button>
+            <button class="btn btn-outline-danger" (click)="clearCart()">
+              Limpar Carrinho
+            </button>
           </div>
         </div>
       </div>
@@ -48,15 +70,33 @@
         <div class="card">
           <div class="card-header"><h5>Resumo</h5></div>
           <div class="card-body">
-            <p><strong>Produtos:</strong>
-               <span class="float-end">€ {{ cart.price | number:'1.2-2' }}</span></p>
-            <p><strong>IVA (23%):</strong>
-               <span class="float-end">€ {{ (cart.price * 0.23) | number:'1.2-2' }}</span></p>
-            <hr>
-            <p><strong>Total:</strong>
-               <span class="float-end">€ {{ (cart.price * 1.23) | number:'1.2-2' }}</span></p>
+            <p>
+              <strong>Produtos:</strong>
+              <span class="float-end"
+                >€ {{ cart.price | number : "1.2-2" }}</span
+              >
+            </p>
+            <p>
+              <strong>IVA (23%):</strong>
+              <span class="float-end"
+                >€ {{ cart.price * 0.23 | number : "1.2-2" }}</span
+              >
+            </p>
+            <hr />
+            <p>
+              <strong>Total:</strong>
+              <span class="float-end"
+                >€ {{ cart.price * 1.23 | number : "1.2-2" }}</span
+              >
+            </p>
 
-            <button class="btn btn-primary w-100" id="OrangeButton" (click)="proceedToCheckout(cart)">Avançar para o Checkout</button>
+            <button
+              class="btn btn-primary w-100"
+              id="OrangeButton"
+              (click)="proceedToCheckout(cart)"
+            >
+              Avançar para o Checkout
+            </button>
           </div>
         </div>
       </div>
@@ -64,9 +104,9 @@
   </ng-container>
 
   <ng-template #emptyCart>
-    <div class="alert alert-info">
-      Não há itens no carrinho no momento.
-    </div>
-    <button class="btn btn-primary" id="OrangeButton" (click)="goBack()">Voltar aos Produtos</button>
+    <div class="alert alert-info">Não há itens no carrinho no momento.</div>
+    <button class="btn btn-primary" id="OrangeButton" (click)="goBack()">
+      Voltar aos Produtos
+    </button>
   </ng-template>
 </div>

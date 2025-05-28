@@ -35,4 +35,8 @@ export class CheckOutService {
   save(idTemp: string , cart: Order): Observable<Order> {
     return this.http.post<Order>(`${endPoint}/save/${idTemp}`, cart, httpOptions);
   }
+
+  getRestNameAndAddress(restId: String): Observable<{ restaurantName: string, restaurantAddress: string }> {
+    return this.http.get<{ restaurantName: string, restaurantAddress: string }>(`${endPoint}/getRestName&Address/${restId}`);
+  }
 }
