@@ -1,10 +1,5 @@
-/**
- * Aqui são as rotas que posso aceder, estilo o Routes
- * 
- */
 import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './components/perfil/user/user.component';
-
 import { NgModule } from '@angular/core';
 import { HistoricOrdersComponent } from './components/perfil/historic-orders/historic-orders.component';
 import { ManageAddressComponent } from './components/perfil/manage-address/manage-address.component';
@@ -17,11 +12,9 @@ import { AuthGuard } from './auth/AuthGuard';
 import { IsClienteOrDonoGuard } from './auth/Guards/IsClienteOrDonoGuard';
 import { EditUserPageComponent } from './components/perfil/user/editPage/edit-user-page/edit-user-page.component';
 import { OrdersPageComponent } from './components/perfil/user/orders/ordes-page/ordes-page.component';
-import { ShowOrderComponent } from './components/perfil/historic-orders/show-order/show-order.component';
 import { OrderDetailsComponent } from './components/perfil/user/orders/order-details/order-details.component';
 import { CartComponent } from './components/cart/cart/cart.component';
 import { CheckoutComponent } from './components/cart/checkout/checkout.component';
-import { AddCommentComponent } from './components/perfil/historic-orders/comments/add-comment/add-comment.component';
 import { PageCommentComponent } from './components/perfil/historic-orders/comments/page-comment/page-comment.component';
 
 /**
