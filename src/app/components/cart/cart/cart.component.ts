@@ -6,17 +6,19 @@ import { Order } from '../../../model/order/order';
 import { Item } from '../../../model/order/item';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Restaurant } from '../../../model/perfil/restaurant';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
     imports: [
-    CommonModule,    // *ngIf, *ngFor, pipes
-    FormsModule      // se usar ngModel
+    CommonModule,
+    FormsModule
   ]
 })
 export class CartComponent implements OnInit {
+  restaurante: Restaurant | null = null;
   cart: Order | null = null;
   couponCode = '';
 
@@ -29,8 +31,23 @@ export class CartComponent implements OnInit {
   }
 
   loadCart() {
+    this.carregarCart();
+  }
+
+  private carregarCart(): void {
     const idTemp = this.route.snapshot.params['userId'];
-    this.cartService.getCart(idTemp).subscribe(c => this.cart = c);
+    this.cartService.getCart(idTemp).subscribe({
+      next: (cart: Order) => {
+        this.cart = cart;
+      },
+      error: (error) => {
+        console.error("Erro ao carregar o carrinho: ", error);
+      }
+    });
+  }
+
+  private carregarRest(restId: string): void {
+    
   }
 
   onQuantityChange(cart: Order, item: Item, newQty: number) {
@@ -63,18 +80,18 @@ export class CartComponent implements OnInit {
   }
 
   proceedToCheckout(cart: Order) {
-  if (cart) {
-    const idTemp = this.route.snapshot.params['userId'];
-    this.cartService.save(idTemp, cart).subscribe({
-      next: () => {
-        this.goToCheckoutDelivery();
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    if (cart) {
+      const idTemp = this.route.snapshot.params['userId'];
+      this.cartService.save(idTemp, cart).subscribe({
+        next: () => {
+          this.goToCheckoutDelivery();
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
   }
-}
 
   saveCart(cart: Order) {
     if (cart) {

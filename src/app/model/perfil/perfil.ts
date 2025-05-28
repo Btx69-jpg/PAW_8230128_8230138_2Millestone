@@ -1,22 +1,22 @@
 import { Order } from '../order/order';
 
 export class Perfil {
-    _id: string;
-    perfilPhoto: string;
     phoneNumber: number;
     email: string;
-    password: string;
-    orders: Order[];
-    historicOrders: Order[];
-    priority: 'Cliente' | 'Admin' | 'Restaurant' | 'Dono' ;
+    _id?: string;
+    perfilPhoto?: string;
+    password?: string;
+    orders?: Order[];
+    historicOrders?: Order[];
+    priority?: 'Cliente' | 'Admin' | 'Restaurant' | 'Dono' ;
     restaurantIds?: string[];
     ownersIds?: string[];
-    banned: boolean;
+    banned?: boolean;
 
-  constructor(_id: string, perfilPhoto: string = '', phoneNumber: number, email: string,
-    password: string, priority: 'Cliente' | 'Admin' | 'Restaurant' | 'Dono',
-    orders: Order[] = [], historicOrders: Order[] = [], restaurantIds?: string[],
-    ownersIds?: string[], banned: boolean = false,) {
+  constructor(phoneNumber: number, email: string, _id?: string, perfilPhoto?: string,
+    password?: string, priority?: 'Cliente' | 'Admin' | 'Restaurant' | 'Dono',
+    orders?: Order[], historicOrders?: Order[], restaurantIds?: string[],
+    ownersIds?: string[], banned?: boolean) {
     this._id = _id;
     this.perfilPhoto = perfilPhoto;
     this.phoneNumber = phoneNumber;
@@ -32,7 +32,9 @@ export class Perfil {
     //Validacoes
     this.validatePhoneNumber();
     this.validateEmail();
-    this.validatePassword();
+    if (this.password) {
+      this.validatePassword();
+    }
     this.validateRoleConstraints();
   }
 
@@ -54,18 +56,20 @@ export class Perfil {
   }
 
   private validatePassword() {
-    if (this.password.length < 8) {
+    if (this.password && this.password.length < 8) {
       throw new Error('A password deve ter no mínimo 8 caracteres');
     }
   }
 
   private validateRoleConstraints() {
-    if (this.priority === 'Dono' && (!this.restaurantIds || this.restaurantIds.length === 0)) {
-      throw new Error('Um perfil Dono deve ter pelo menos um restaurantId');
-    }
+    if(this.priority) {
+      if (this.priority === 'Dono' && (!this.restaurantIds || this.restaurantIds.length === 0)) {
+        throw new Error('Um perfil Dono deve ter pelo menos um restaurantId');
+      }
 
-    if (this.priority === 'Restaurant' && (!this.ownersIds || this.ownersIds.length === 0)) {
-      throw new Error('Um perfil Restaurant deve ter pelo menos um ownerId');
+      if (this.priority === 'Restaurant' && (!this.ownersIds || this.ownersIds.length === 0)) {
+        throw new Error('Um perfil Restaurant deve ter pelo menos um ownerId');
+      }
     }
   }
 }
