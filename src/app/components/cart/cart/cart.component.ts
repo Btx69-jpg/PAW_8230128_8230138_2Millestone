@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {CheckOutService} from '../../../services/user/checkOut/check-out.service';
 import { Location } from '@angular/common';
@@ -7,6 +7,8 @@ import { Item } from '../../../model/order/item';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Restaurant } from '../../../model/perfil/restaurant';
+import { Address } from '../../../model/address';
+import { SafeUrlPipe } from './mapa/safe-url.pipe';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +16,8 @@ import { Restaurant } from '../../../model/perfil/restaurant';
   styleUrls: ['./cart.component.css'],
     imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    SafeUrlPipe 
   ]
 })
 export class CartComponent implements OnInit {
@@ -22,9 +25,10 @@ export class CartComponent implements OnInit {
   cart: Order | null = null;
   couponCode = '';
 
+  previousQuantities = new Map<Item, number>();
+
   constructor(
-    private cartService: CheckOutService,private location: Location,private route: ActivatedRoute,private router: Router
-  ) {}
+    private cartService: CheckOutService,private location: Location,private route: ActivatedRoute,private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadCart();
@@ -34,11 +38,37 @@ export class CartComponent implements OnInit {
     this.carregarCart();
   }
 
+  private formatAddress(address: Address): string {
+    return `${address.street}, ${address.postal_code} ${address.city}`;
+  }
+  //Vai buscar o mapa do google maps
+  getGoogleMapsUrl(address: Address): string {
+    const formattedAddress = this.formatAddress(address);
+    const encodedAddress = encodeURIComponent(formattedAddress);
+    return `https://www.google.com/maps?q=${encodedAddress}&output=embed`;
+  }
+
+  isRestauranteAberto(): boolean {
+    if (!this.restaurante) return false;
+    const now = new Date();
+    const currentSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+    return currentSeconds >= this.restaurante.openingTime && currentSeconds < this.restaurante.closingTime;
+  }
+
+  formatHour(seconds: number): string {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  }
+
   private carregarCart(): void {
     const idTemp = this.route.snapshot.params['userId'];
     this.cartService.getCart(idTemp).subscribe({
       next: (cart: Order) => {
         this.cart = cart;
+        if(this.cart.itens) {
+          this.carregarRest(this.cart.itens[0].from);
+        }
       },
       error: (error) => {
         console.error("Erro ao carregar o carrinho: ", error);
@@ -47,22 +77,77 @@ export class CartComponent implements OnInit {
   }
 
   private carregarRest(restId: string): void {
-    
+    this.cartService.getRestaurant(restId).subscribe({
+      next: (restaurant: Restaurant) => {
+        this.restaurante = restaurant;
+        console.log("Restaurante: ", this.restaurante);
+        this.previousQuantities.clear();
+        if (this.cart && this.cart.itens) {
+          for (const item of this.cart.itens) {
+            this.previousQuantities.set(item, item.quantity);
+          }
+        }
+
+      }
+    })
   }
 
-  onQuantityChange(cart: Order, item: Item, newQty: number) {
-    for (const i of cart.itens) {
-      if (i === item) {
-        if (newQty < 0) {
-          newQty = 0;
-        } else {
-          i.quantity = newQty;
-        }
+  onSafeQuantityChange(cart: Order, item: Item, value: any) {
+    //Verifica se o valor foi apagado ou é igual ou menor que 0
+    if (value === '' || value === null || isNaN(value) || value <= 0) {
+      setTimeout(() => {
+        item.quantity = 1;
+        this.cdr.detectChanges(); 
+        this.onQuantityChange(cart, item, 1);
+      });
+      return;
+    }
+
+    const sanitizedValue = Number(value);
+    item.quantity = sanitizedValue;
+    this.onQuantityChange(cart, item, sanitizedValue);
+  }
+
+  private onQuantityChange(cart: Order, item: Item, newQty: number) {
+    if (!this.restaurante) return;
+
+    let totQuantity = 0;
+    let posItem = -1;
+
+    for (let i = 0; i < cart.itens.length; i++) {
+      const itemAtual = cart.itens[i];
+      if (itemAtual === item) {
+        posItem = i;
+      } else {
+        totQuantity += itemAtual.quantity;
       }
     }
- 
-    cart.price = cart.itens.reduce((total, i) => total + (i.price * i.quantity), 0);
-    this.cart = cart;
+
+    const limite = this.restaurante.maxOrdersPerClient;
+
+    if (newQty < 0 || isNaN(newQty)) {
+      newQty = 0;
+    }
+
+    // Verifica se o novo valor ultrapassa o limite
+    if (posItem === -1 || (totQuantity + newQty > limite)) {
+      const previousQty = this.previousQuantities.get(item) ?? item.quantity;
+
+      console.warn("Limite excedido! Valor revertido para:", previousQty);
+
+      setTimeout(() => {
+        item.quantity = previousQty;
+        this.cdr.detectChanges();
+      });
+
+      this.cart = cart;
+      return;
+    }
+
+    cart.itens[posItem].quantity = newQty;
+    this.previousQuantities.set(item, newQty);
+
+    cart.price = cart.itens.reduce((total, i) => total + i.price * i.quantity, 0);
   }
 
   clearCart() {
@@ -80,7 +165,8 @@ export class CartComponent implements OnInit {
   }
 
   proceedToCheckout(cart: Order) {
-    if (cart) {
+    const isRestAberto = this.isRestauranteAberto();
+    if (cart && isRestAberto) {
       const idTemp = this.route.snapshot.params['userId'];
       this.cartService.save(idTemp, cart).subscribe({
         next: () => {
