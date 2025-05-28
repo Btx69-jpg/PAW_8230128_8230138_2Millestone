@@ -13,6 +13,7 @@ import { Title } from '@angular/platform-browser';
 import { AddressOrder } from '../../../model/order/address-order';
 import { newAddressOrder } from '../../../model/order/newAddressOrder';
 import { environment } from '../../../enviroments/enviroment';
+import { StripeService } from '../../../services/Stripe/stripe-services.service';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class CheckoutComponent implements OnInit {
     public userRest: UserService,
     private titleService: Title,
     private AddresOrderService: AddresOrderService,
-    private CheckOutService: CheckOutService
+    private CheckOutService: CheckOutService,
+    private stripeService: StripeService
   ) {}
 
   ngOnInit(): void {
@@ -71,13 +73,6 @@ export class CheckoutComponent implements OnInit {
         console.error('Erro a carregar o utilizador', err);
       },
     });
-  }
-
-  goToPayment() {
-    this.router.navigate([
-      '/checkout/payment',
-      this.route.snapshot.params['userId'],
-    ]);
   }
 
   goBack() {
@@ -159,7 +154,13 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-    fullDishImagePath(dishFotoPath: string) {
-      return dishFotoPath ? `${environment.apiUrl}${dishFotoPath}` : '/assets/img/no-image.png';
-    }
+  fullDishImagePath(dishFotoPath: string) {
+    return dishFotoPath ? `${environment.apiUrl}${dishFotoPath}` : '/assets/img/no-image.png';
+  }
+  
+  goToPayment() {
+    const idTemp = this.route.snapshot.params['userId'];
+    this.stripeService.redirectToCheckout(idTemp.toString());
+  }
+
 }
