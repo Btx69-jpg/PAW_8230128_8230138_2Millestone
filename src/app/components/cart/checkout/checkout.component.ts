@@ -58,15 +58,17 @@ export class CheckoutComponent implements OnInit {
               this.restaurantAddress = data.restaurantAddress;
             },
             error: (err) => {
-              console.error(
-                'Erro ao obter nome e endereço do restaurante',
-                err
-              );
+              console.error('Erro ao obter nome e endereço do restaurante', err);
             },
           });
         } else {
           this.restaurantName = '';
           this.restaurantAddress = '';
+        }
+        // detecta o pagamento bem sucedido
+        const paymentStatus = this.route.snapshot.queryParams['payment'];
+        if (paymentStatus === 'success') {
+          this.handleOrderCreation();
         }
       },
       error: (err) => {
@@ -161,6 +163,84 @@ export class CheckoutComponent implements OnInit {
   goToPayment() {
     const idTemp = this.route.snapshot.params['userId'];
     this.stripeService.redirectToCheckout(idTemp.toString());
+  }
+
+  /**
+   * Handles order creation and persistence after payment success
+   */
+  private handleOrderCreation() {
+    if (!this.user || !this.user.cart || !this.user.cart.itens.length) return;
+    const cart = this.user.cart;
+    const perfil = this.user.perfil;
+    const now = new Date();
+
+    // Build FaturaCliente
+    const client = new (window as any).FaturaCliente(
+      this.user._id,
+      this.user.firstName,
+      this.user.lastName,
+      perfil.phoneNumber,
+      perfil.email
+    );
+
+    // Build FaturaRestaurant
+    const restId = cart.itens[0].from;
+    const restaurant = new (window as any).FaturaRestaurant(
+      restId,
+      this.restaurantName,
+      999999999, // TODO: get real phone/email if available
+      'restaurante@email.com'
+    );
+
+    // Address logic
+    let addressOrder;
+    if (this.selectedOption === 'home') {
+      // Delivery: use selected address
+      addressOrder = this.user.addresses.find(a => a._id === this.selectedAddressId);
+    } else {
+      addressOrder = {
+        _id: 'rest-address',
+        address: {
+          street: this.restaurantAddress,
+          postal_code: '',
+          city: ''
+        },
+        nif: undefined
+      };
+    }
+
+    // Create Order
+    const order = new (window as any).Order(
+      '', // _id will be set by backend
+      now,
+      client,
+      restaurant,
+      addressOrder,
+      cart.itens,
+      cart.price,
+      'Pendente',
+      this.selectedOption === 'home' ? 'delivery' : 'pickup',
+      '', // comment
+      ''  // commentPhoto
+    );
+
+    // Persist order for user (historicOrders) and restaurant
+    // You may need to adjust endpoint/service as needed
+    this.CheckOutService.save(this.user._id, order).subscribe({
+      next: (savedOrder: Order) => {
+        // Optionally, show toast/feedback here
+        // TODO: Call restaurant endpoint if needed
+        // Optionally, clear cart
+        if (this.user) {
+          this.CheckOutService.clearCart(this.user._id).subscribe();
+        }
+        // Optionally, navigate to order summary or historic orders
+        this.router.navigate(['perfil/user/:userId/historicOrder'], { queryParams: {}, replaceUrl: true });
+      },
+      error: (err) => {
+        console.error('Erro ao criar encomenda', err);
+      }
+    });
   }
 
 }
