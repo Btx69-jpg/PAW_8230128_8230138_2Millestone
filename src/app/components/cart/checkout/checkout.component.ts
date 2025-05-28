@@ -260,7 +260,7 @@ export class CheckoutComponent implements OnInit {
         // TODO dar um toast de feedback de sucesso
 
         // direciona para a pagina do historico de encomendas
-        this.router.navigate(['perfil/user/:userId/historicOrder'], {
+        this.router.navigate([`perfil/user/${this.user?._id}/orders`], {
           queryParams: {},
           replaceUrl: true,
         });
