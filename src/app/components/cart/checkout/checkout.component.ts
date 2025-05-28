@@ -18,6 +18,7 @@ import { Restaurant } from '../../../model/perfil/restaurant';
 
 import { FaturaCliente } from '../../../model/order/fatura-cliente';
 import { FaturaRestaurant } from '../../../model/order/fatura-restaurant';
+import { ToastService } from '../../../services/features/toast/toast-service.service';
 
 @Component({
   selector: 'app-checkout',
@@ -42,16 +43,26 @@ export class CheckoutComponent implements OnInit {
     private titleService: Title,
     private AddresOrderService: AddresOrderService,
     private CheckOutService: CheckOutService,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('Perfil');
-    const idTemp = this.route.snapshot.params['userId'];
+  this.titleService.setTitle('Perfil');
+  const idTemp = this.route.snapshot.params['userId'];
 
-    this.userRest.getUser(idTemp).subscribe({
-      next: (dadosUser: User) => {
-        this.user = dadosUser;
+  this.userRest.getUser(idTemp).subscribe({
+    next: (dadosUser: User) => {
+      this.user = dadosUser;
+
+      // Verifica se o utilizador tem um carrinho e se tem itens
+      if (this.user.cart && this.user.cart.itens[0]) {
+        const restId = this.user.cart.itens[0].from;
+
+        // Verifica se é para criar ordem após pagamento
+        let shouldCreateOrder = false;
+        let checkoutOptions: any = null;
+
         this.route.queryParams.subscribe(params => {
           const paymentStatus = params['payment'];
           if (paymentStatus === 'success') {
@@ -60,34 +71,34 @@ export class CheckoutComponent implements OnInit {
               const { selectedOption, selectedAddressId, cart } = JSON.parse(options);
               this.selectedOption = selectedOption;
               this.selectedAddressId = selectedAddressId;
-              if (cart && this.user) this.user.cart = cart; // <-- restaurar o carrinho!
+              if (cart && this.user) this.user.cart = cart;
               localStorage.removeItem('checkoutOptions');
             }
-            this.handleOrderCreation();
+            shouldCreateOrder = true;
           }
         });
-        if (this.user.cart && this.user.cart.itens[0]) {
-          const restId = this.user.cart.itens[0].from;
-          this.CheckOutService.getRestaurant(restId).subscribe({
-            next: (restaurant: Restaurant) => {
-              this.restaurant = restaurant
-            },
-            error: (err) => {
-              console.error(
-                'Erro ao obter nome e endereço do restaurante',
-                err
-              );
-            },
-          });
-        } else {
-          this.restaurant = {} as Restaurant; // Inicializa como objeto vazio se não houver itens no carrinho
-        }
-      },
-      error: (err) => {
-        console.error('Erro a carregar o utilizador', err);
-      },
-    });
-  }
+
+        this.CheckOutService.getRestaurant(restId).subscribe({
+          next: (restaurant: Restaurant) => {
+            this.restaurant = restaurant;
+            // Só cria a ordem depois de ter o restaurante
+            if (shouldCreateOrder) {
+              this.handleOrderCreation();
+            }
+          },
+          error: (err) => {
+            console.error('Erro ao obter restaurante', err);
+          },
+        });
+      } else {
+        this.restaurant = {} as Restaurant;
+      }
+    },
+    error: (err) => {
+      console.error('Erro a carregar o utilizador', err);
+    },
+  });
+}
 
   goBack() {
     this.location.back();
@@ -175,6 +186,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   goToPayment() {
+    if (this.selectedOption === 'home' && !this.selectedAddressId) {
+      this.toastService.show('Selecione uma morada para prosseguir com a entrega!', 'error');
+      return;
+    }
     const idTemp = this.route.snapshot.params['userId'];
     // Salva também o carrinho no localStorage!
     localStorage.setItem(
@@ -212,7 +227,7 @@ export class CheckoutComponent implements OnInit {
       restId,
       this.restaurant?.name || 'Restaurante Desconhecido',
       this.restaurant?.nif || 999999999, //ALTERAR QUANDO O ARTUR FIZER O MODEL DO RESTAURANTE
-      'restaurante@email.com'
+      this.restaurant?.perfil.email ||'restaurante@email.com'
     );
 
     let addressOrder: AddressOrder | undefined;
@@ -222,6 +237,7 @@ export class CheckoutComponent implements OnInit {
       );
       if (!selected) {
         // Mostrar um toast aqui
+        this.toastService?.show('Selecione uma morada para prosseguir com a entrega!', 'error');
         console.error('Nenhuma morada selecionada para entrega.');
         return;
       }
