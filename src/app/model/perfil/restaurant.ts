@@ -1,3 +1,4 @@
+import { Address } from "../address";
 import { Perfil } from "./perfil";
 
 export class Restaurant {
@@ -5,6 +6,7 @@ export class Restaurant {
     name: string;
     perfil: Perfil;
     description?: string;
+    address: Address;
     maxOrdersPerClient: number;
     maximumRadiusDelivery: number;
     timeConfection: number;
@@ -12,12 +14,13 @@ export class Restaurant {
     openingTime: number;
     closingTime: number;
 
-    constructor(name: string, perfil: Perfil, maxOrdersPerClient: number, maximumRadiusDelivery: number,
-        timeConfection: number, timeDelivery: number, openingTime: number, closingTime: number, 
-        _id?: string ) {
+    constructor(name: string, perfil: Perfil, address: Address,
+        maxOrdersPerClient: number, maximumRadiusDelivery: number, timeConfection: number, 
+        timeDelivery: number, openingTime: number, closingTime: number, _id?: string ) {
         this._id = _id;
         this.name = name;
         this.perfil = perfil;
+        this.address = address;
         this.maxOrdersPerClient = maxOrdersPerClient;
         this.maximumRadiusDelivery = maximumRadiusDelivery;
         this.timeConfection = timeConfection;
@@ -40,7 +43,7 @@ export class Restaurant {
         if (!this.name) {
             throw new Error("O nome é obrigatório");
         }
-        
+
         if (this.name.length > 100) {
             throw new Error("O nome deve ter no máximo 100 caracteres");
         }

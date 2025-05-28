@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Item } from '../../../model/order/item';
 import { Order } from '../../../model/order/order';
+import { Restaurant } from '../../../model/perfil/restaurant';
 
 const endPoint = 'http://localhost:3000/api/v1/checkout';
 
@@ -24,7 +25,6 @@ export class CheckOutService {
   }
 
   clearCart(userId: String): Observable<void> {
-    //trocar para delete aqui e no outro trabalho
     return this.http.get<void>(`${endPoint}/limparCarrinho/${userId}`);
   }
 
@@ -36,7 +36,7 @@ export class CheckOutService {
     return this.http.post<Order>(`${endPoint}/save/${idTemp}`, cart, httpOptions);
   }
 
-  getRestNameAndAddress(restId: String): Observable<{ restaurantName: string, restaurantAddress: string }> {
-    return this.http.get<{ restaurantName: string, restaurantAddress: string }>(`${endPoint}/getRestName&Address/${restId}`);
+  getRestaurant(restId: String): Observable<Restaurant> {
+    return this.http.get<Restaurant>(`${endPoint}/getRestaurante/${restId}`, httpOptions);
   }
 }

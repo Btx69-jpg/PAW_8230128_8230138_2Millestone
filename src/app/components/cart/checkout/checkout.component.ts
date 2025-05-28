@@ -14,6 +14,7 @@ import { AddressOrder } from '../../../model/order/address-order';
 import { newAddressOrder } from '../../../model/order/newAddressOrder';
 import { environment } from '../../../enviroments/enviroment';
 import { StripeService } from '../../../services/Stripe/stripe-services.service';
+import { Restaurant } from '../../../model/perfil/restaurant';
 
 
 @Component({
@@ -52,10 +53,10 @@ export class CheckoutComponent implements OnInit {
 
         if (this.user.cart && this.user.cart.itens[0]) {
           const restId = this.user.cart.itens[0].from;
-          this.CheckOutService.getRestNameAndAddress(restId).subscribe({
-            next: (data) => {
-              this.restaurantName = data.restaurantName;
-              this.restaurantAddress = data.restaurantAddress;
+          this.CheckOutService.getRestaurant(restId).subscribe({
+            next: (restaurant: Restaurant) => {
+              //this.restaurantName = data.restaurantName;
+              //this.restaurantAddress = data.restaurantAddress;
             },
             error: (err) => {
               console.error('Erro ao obter nome e endereço do restaurante', err);
