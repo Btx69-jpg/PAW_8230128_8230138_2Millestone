@@ -69,11 +69,8 @@ export class CheckoutComponent implements OnInit {
         if (this.user.cart && this.user.cart.itens[0]) {
           const restId = this.user.cart.itens[0].from;
           this.CheckOutService.getRestaurant(restId).subscribe({
-            next: (data) => {
-              this.restaurantName = data.restaurantName;
-              this.restaurantAddress = data.restaurantAddress;
-              // detecta o pagamento bem sucedido
-
+            next: (restaurant: Restaurant) => {
+              this.restaurant = restaurant
             },
             error: (err) => {
               console.error(
@@ -83,8 +80,7 @@ export class CheckoutComponent implements OnInit {
             },
           });
         } else {
-          this.restaurantName = '';
-          this.restaurantAddress = '';
+          this.restaurant = {} as Restaurant; // Inicializa como objeto vazio se não houver itens no carrinho
         }
       },
       error: (err) => {
@@ -214,8 +210,8 @@ export class CheckoutComponent implements OnInit {
     const restId = cart.itens[0].from;
     const restaurant = new FaturaRestaurant(
       restId,
-      this.restaurantName,
-      999999999, //ALTERAR QUANDO O ARTUR FIZER O MODEL DO RESTAURANTE
+      this.restaurant?.name || 'Restaurante Desconhecido',
+      this.restaurant?.nif || 999999999, //ALTERAR QUANDO O ARTUR FIZER O MODEL DO RESTAURANTE
       'restaurante@email.com'
     );
 
@@ -234,7 +230,11 @@ export class CheckoutComponent implements OnInit {
       //caso queira pegar no restaurante
       addressOrder = new AddressOrder(
         'pickup',
-        new Address(this.restaurantAddress, '', ''),
+        new Address(
+          this.restaurant && this.restaurant.address ? this.restaurant.address.street : '',
+          this.restaurant && this.restaurant.address ? this.restaurant.address.postal_code : '',
+          this.restaurant && this.restaurant.address ? this.restaurant.address.city : ''
+        ),
         999999999
       );
     }

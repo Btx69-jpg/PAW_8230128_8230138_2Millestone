@@ -5,6 +5,7 @@ export class Restaurant {
     _id?: string;
     name: string;
     perfil: Perfil;
+    nif: number;
     description?: string;
     address: Address;
     maxOrdersPerClient: number;
@@ -14,11 +15,12 @@ export class Restaurant {
     openingTime: number;
     closingTime: number;
 
-    constructor(name: string, perfil: Perfil, address: Address,
+    constructor(name: string, perfil: Perfil, nif: number, address: Address,
         maxOrdersPerClient: number, maximumRadiusDelivery: number, timeConfection: number, 
         timeDelivery: number, openingTime: number, closingTime: number, _id?: string ) {
         this._id = _id;
         this.name = name;
+        this.nif = nif;
         this.perfil = perfil;
         this.address = address;
         this.maxOrdersPerClient = maxOrdersPerClient;
