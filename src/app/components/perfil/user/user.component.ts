@@ -18,8 +18,8 @@ import { StripeService } from '../../../services/Stripe/stripe-services.service'
 export class UserComponent implements OnInit {
   user: User = {} as User;
 
-  constructor(private stripeService:StripeService,
-    private titleService: Title, public userRest: UserService, private route: ActivatedRoute,private router: Router) {}
+  constructor(private titleService: Title, public userRest: UserService, private route: ActivatedRoute, 
+    private router: Router) {}
 
   ngOnInit(): void {
     this.titleService.setTitle('Perfil');
@@ -41,11 +41,4 @@ export class UserComponent implements OnInit {
   goEditPasswordPage(): void {
     this.router.navigate(['changePassword'], { relativeTo: this.route });
   }
-
-  //Teste Checkout
-  checkout() {
-    const idTemp = this.route.snapshot.params['userId'];
-    this.stripeService.redirectToCheckout(idTemp.toString());
-  }
-
 }
