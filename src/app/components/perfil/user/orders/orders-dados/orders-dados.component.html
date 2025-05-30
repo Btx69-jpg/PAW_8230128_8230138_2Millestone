@@ -6,7 +6,7 @@
 
     <div class="botao-container">
         <button class="btn-ver" (click)="showOrder(order._id)">Ver Menu</button>
-        <div *ngIf="isBaned || order.status !== 'Pendente' || timeToCancel">
+        <div *ngIf="isBaned || order.status === 'Pendente' || timeToCancel">
             <button class="btn-cancelar" (click)="cancelarOrder(order._id)">Cancelar</button>
         </div>
     </div>
