@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { Restaurant } from '../../../model/perfil/restaurant';
 import { Address } from '../../../model/address';
 import { SafeUrlPipe } from './mapa/safe-url.pipe';
+import { ToastService } from '../../../services/features/toast/toast-service.service';
 
 @Component({
   selector: 'app-cart',
@@ -28,7 +29,13 @@ export class CartComponent implements OnInit {
   previousQuantities = new Map<Item, number>();
 
   constructor(
-    private cartService: CheckOutService,private location: Location,private route: ActivatedRoute,private router: Router, private cdr: ChangeDetectorRef) {}
+    private cartService: CheckOutService,
+    private location: Location,
+    private route: ActivatedRoute,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private toastService: ToastService // <-- injeta o serviço de toast
+  ) {}
 
   ngOnInit(): void {
     this.loadCart();
@@ -166,6 +173,10 @@ export class CartComponent implements OnInit {
 
   proceedToCheckout(cart: Order) {
     const isRestAberto = this.isRestauranteAberto();
+    if (!isRestAberto) {
+      this.toastService.show('O restaurante está fechado. Não é possível finalizar o pedido neste momento.', 'error');
+      return;
+    }
     if (cart && isRestAberto) {
       const idTemp = this.route.snapshot.params['userId'];
       this.cartService.save(idTemp, cart).subscribe({
