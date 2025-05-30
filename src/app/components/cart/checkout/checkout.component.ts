@@ -146,7 +146,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmitAddress(form: any) {
-    if (form.invalid) return;
+    if (form.invalid) {
+      return;
+    }
+      
     const userId = this.route.snapshot.params['userId'];
     const { nif, street, postal_code, city } = this.addressData;
     const address = new Address(street, postal_code, city);
