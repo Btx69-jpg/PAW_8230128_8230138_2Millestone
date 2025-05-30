@@ -1,27 +1,48 @@
 <div *ngIf="user?.perfil">
-    <div class="content">
-        
-        <div class="row bg-white p-4 rounded shadow mb-4">
+  <div class="content">
+    <div class="row bg-white p-4 rounded shadow mb-4">
 
-            <div *ngIf="user.perfil.perfilPhoto" class="col-auto pe-4">
-                <img 
-                    [src]="fullImagePath"
-                    alt="Foto de Perfil"
-                    class="profile-pic img-thumbnail"
-                    width="100" />
-            </div>
+      <div *ngIf="user.perfil.perfilPhoto" class="col-auto pe-4">
+        <img
+          [src]="fullImagePath"
+          alt="Foto de Perfil"
+          class="profile-pic img-thumbnail"
+          width="100"
+        />
+      </div>
 
-            <div class="col-12">
-                <p><strong>Nome do Utilizador:</strong> {{ user.firstName }}, {{ user.lastName }}</p>
-            </div>
-            
-            <div class="col-md-6">
-                <p><strong>Email:</strong> {{ user.perfil.email }} </p>
-            </div>
-            
-            <div class="col-md-6">
-                <p><strong>Número Telefónico:</strong> {{ user.perfil.phoneNumber }}</p>
-            </div>
-        </div>
+      <div class="col-12 mb-3">
+        <p>
+          <i class="bi bi-person me-2"></i>
+          <strong>Nome do Utilizador:</strong>
+          {{ user.firstName }} {{ user.lastName }}
+        </p>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <p>
+          <i class="bi bi-envelope me-2"></i>
+          <strong>Email:</strong>
+          {{ user.perfil.email }}
+        </p>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <p>
+          <i class="bi bi-telephone me-2"></i>
+          <strong>Número Telefónico:</strong>
+          {{ user.perfil.phoneNumber }}
+        </p>
+      </div>
+
+      <div *ngIf="user.birthdate" class="col-md-6 mb-3">
+        <p>
+          <i class="bi bi-calendar me-2"></i>
+          <strong>Data de Nascimento:</strong>
+          {{ user.birthdate | date:'longDate' }}
+        </p>
+      </div>
+
     </div>
+  </div>
 </div>
