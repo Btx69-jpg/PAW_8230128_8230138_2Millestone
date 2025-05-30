@@ -19,6 +19,7 @@ import { Restaurant } from '../../../model/perfil/restaurant';
 import { FaturaCliente } from '../../../model/order/fatura-cliente';
 import { FaturaRestaurant } from '../../../model/order/fatura-restaurant';
 import { ToastService } from '../../../services/features/toast/toast-service.service';
+import { CartService } from '../../../services/cart/cart-service.service';
 
 @Component({
   selector: 'app-checkout',
@@ -43,6 +44,7 @@ export class CheckoutComponent implements OnInit {
     private titleService: Title,
     private AddresOrderService: AddresOrderService,
     private CheckOutService: CheckOutService,
+    private cartService: CartService,
     private stripeService: StripeService,
     private toastService: ToastService
   ) {}
@@ -78,7 +80,7 @@ export class CheckoutComponent implements OnInit {
           }
         });
 
-        this.CheckOutService.getRestaurant(restId).subscribe({
+        this.cartService.getRestaurant(restId).subscribe({
           next: (restaurant: Restaurant) => {
             this.restaurant = restaurant;
             // Só cria a ordem depois de ter o restaurante

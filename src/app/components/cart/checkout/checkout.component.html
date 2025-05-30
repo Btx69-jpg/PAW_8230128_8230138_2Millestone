@@ -211,9 +211,10 @@
               </button>
             </div>
             <div *ngIf="selectedOption === 'store'">
-              <p>Levantar em: {{restaurant?.name}}, {{restaurant?.address}}</p>
+            <p>
+              Levantar em: {{ restaurant?.name }}, {{ restaurant?.address?.street }}, 
+              {{ restaurant?.address?.postal_code }}, {{ restaurant?.address?.city }} </p>
               <p class="mb-1">Proceda ao pagamento</p>
-
             </div>
           </div>
         </div>
@@ -225,7 +226,7 @@
           <div class="card-body">
             <ng-container *ngIf="user.cart.price">
               <h5>Resumo dos Pedidos</h5>
-              <p>Produtos: {{ getTotalQuantity() }}</p>
+              <p>Prutos: {{ getTotalQuantity() }}</p>
               <p>Subtotal:   {{ user.cart.price | number : "1.2-2" }}€</p>
               <p>
                 IVA (23%):   {{ user.cart.price * 0.23 | number : "1.2-2" }}€

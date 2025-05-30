@@ -1,34 +1,44 @@
-<div class="col-12 col-md-10 col-lg-8 mx-auto mb-4">
-    <form *ngIf="form" [formGroup]="form" (ngSubmit)="filtrar()" class="row g-3 justify-content-center">
-        
-        <!-- Nome do Restaurante -->
-        <div class="col-md-6">
-            <label for="nameRest" class="form-label">Nome do Restaurante:</label>
-            <input
-                type="text"
-                id="nameRest"
-                class="form-control"
-                formControlName="nameRest"
-                placeholder="Nome do Restaurante" />
-            <div *ngIf="form.get('nameRest')?.invalid && form.get('nameRest')?.touched" class="text-danger">
-                O nome deve ter no máximo 100 caracteres e conter apenas letras e números.
-            </div>
-        </div>
+<div class="col-12 col-md-10 col-lg-8 mx-auto mb-4 p-4">
 
-        <!-- status da Encomenda -->
-        <div class="col-md-6">
-            <label for="status" class="form-label">status da Encomenda:</label>
-            <select id="status" class="form-select" formControlName="status">
-                <option value="all">Todos</option>
-                <option value="Pendente">Pendente</option>
-                <option value="Expedida">Expedidas</option>
-            </select>
-        </div>
+  <form *ngIf="form" [formGroup]="form" (ngSubmit)="filtrar()" class="row g-4">
 
-        <!-- Botões -->
-        <div class="col-12 d-flex justify-content-center">
-            <button type="button" class="btn btn-secondary me-2" (click)="limparFiltro()">Limpar</button>
-            <button type="submit" class="btn btn-primary">Filtrar</button>
-        </div>
-    </form>
+    <!-- Nome do Restaurante -->
+    <div class="col-md-6">
+      <label for="nameRest" class="form-label fw-semibold">
+        <i class="bi bi-shop me-1"></i> Nome do Restaurante:
+      </label>
+      <input
+        type="text"
+        id="nameRest"
+        class="form-control"
+        formControlName="nameRest"
+        placeholder="Ex: McDonald's" />
+      <div *ngIf="form.get('nameRest')?.invalid && form.get('nameRest')?.touched" class="form-text text-danger">
+        O nome deve ter no máximo 100 caracteres e conter apenas letras e números.
+      </div>
+    </div>
+
+    <!-- Status da Encomenda -->
+    <div class="col-md-6">
+      <label for="status" class="form-label fw-semibold">
+        <i class="bi bi-truck me-1"></i> Status da Encomenda:
+      </label>
+      <select id="status" class="form-select" formControlName="status">
+        <option value="all">Todos</option>
+        <option value="Pendente">Pendente</option>
+        <option value="Expedida">Expedidas</option>
+      </select>
+    </div>
+
+    <!-- Botões -->
+   <div class="col-12 d-flex justify-content-center pt-3">
+  <button type="button" class="btn btn-outline-secondary me-3 px-4" (click)="limparFiltro()">
+    <i class="bi bi-x-circle me-1"></i> Limpar
+  </button>
+  <button type="submit" class="btn btn-primary px-4" title="Filtrar encomendas">
+        <i class="bi bi-funnel-fill me-1"></i> Filtrar
+      </button>
+</div>
+
+  </form>
 </div>

@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import {CheckOutService} from '../../../services/user/checkOut/check-out.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Order } from '../../../model/order/order';
 import { Item } from '../../../model/order/item';
@@ -10,6 +9,7 @@ import { Restaurant } from '../../../model/perfil/restaurant';
 import { Address } from '../../../model/address';
 import { SafeUrlPipe } from './mapa/safe-url.pipe';
 import { ToastService } from '../../../services/features/toast/toast-service.service';
+import { CartService } from '../../../services/cart/cart-service.service';
 
 @Component({
   selector: 'app-cart',
@@ -29,12 +29,12 @@ export class CartComponent implements OnInit {
   previousQuantities = new Map<Item, number>();
 
   constructor(
-    private cartService: CheckOutService,
+    private cartService: CartService,
     private location: Location,
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private toastService: ToastService // <-- injeta o serviço de toast
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {

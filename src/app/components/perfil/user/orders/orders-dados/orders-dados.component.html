@@ -1,13 +1,39 @@
-<div class="card-body">
-    <h5 class="card-title">Nome do restaurante: {{ order.restaurant.name }}</h5>
-    <h6>{{ order.itens.length }} items</h6>
-    <h6>{{ order.date }}</h6>
-    <h6>Status: {{ order.status }}</h6>
+<div class="col-12 col-md-6 col-lg-4">
+  <div class="card h-100 shadow-sm border-primary">
+    <div class="card-body">
+      <h5 class="card-title fw-bold text-wrap">
+        Nome do restaurante: {{ order.restaurant.name }}
+      </h5>
 
-    <div class="botao-container">
-        <button class="btn-ver" (click)="showOrder(order._id)">Ver Menu</button>
-        <div *ngIf="isBaned || order.status === 'Pendente' || timeToCancel">
-            <button class="btn-cancelar" (click)="cancelarOrder(order._id)">Cancelar</button>
-        </div>
+      <h6 class="text-muted">{{ order.itens.length }} itens</h6>
+      <h6 class="text-muted">
+        {{ order.date | date: 'dd/MM/yyyy HH:mm' }}
+      </h6>
+
+      <h6 class="mb-2">
+        Status:
+        <span class="badge"
+              [ngClass]="{
+                'bg-secondary': order.status === 'Pendente',
+                'bg-success': order.status === 'Expedida',
+                'bg-danger': order.status === 'Entregue'
+              }">
+          {{ order.status }}
+        </span>
+      </h6>
+
+      <!-- Botões -->
+      <div class="botao-container">
+        <button class="btn-ver" (click)="showOrder(order._id)">
+          Ver Menu
+        </button>
+
+        <button
+                class="btn-cancelar"
+                (click)="cancelarOrder(order._id)">
+          Cancelar
+        </button>
+      </div>
     </div>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Order } from '../../../../../model/order/order';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from '../../../../../services/user/order/order.service';
@@ -11,7 +11,7 @@ import { time } from 'console';
   templateUrl: './orders-dados.component.html',
   styleUrl: './orders-dados.component.css'
 })
-export class OrdersDadosComponent {
+export class OrdersDadosComponent implements OnInit {
   @Input() order!: Order;
   @Input() userId!: string;
   @Input() isBaned: boolean = false;
@@ -22,11 +22,13 @@ export class OrdersDadosComponent {
   constructor(private orderService:OrderService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
+    console.log('ngOnInit chamado');
     this.userId = this.route.snapshot.params['userId'];
     this.verificarTempoCancelar();
   }
 
-  verificarTempoCancelar() {
+  private verificarTempoCancelar(): void {
+    console.log("Verificar data")
     const dataAtual = Date.now();
     const tempoOrder = dataAtual - new Date(this.order.date).getTime();
     const cincoMinutos = 5 * 60 * 1000;

@@ -31,3 +31,7 @@
 .btn-cancelar:hover {
   background-color: #991b1b;
 }
+
+.card {
+  min-width: 250px;
+}
