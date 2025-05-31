@@ -28,7 +28,7 @@
           Ver Encomenda
         </button>
 
-        <button
+        <button *ngIf="!isBaned && order.status === 'Pendente' && timeToCancel"
           class="btn-cancelar"
           (click)="cancelarOrder(order._id)">
           Cancelar

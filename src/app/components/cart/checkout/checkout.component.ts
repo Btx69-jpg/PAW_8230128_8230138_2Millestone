@@ -20,6 +20,7 @@ import { FaturaCliente } from '../../../model/order/fatura-cliente';
 import { FaturaRestaurant } from '../../../model/order/fatura-restaurant';
 import { ToastService } from '../../../services/features/toast/toast-service.service';
 import { CartService } from '../../../services/cart/cart-service.service';
+import { ValidateRadiusDelivery } from '../../../model/ValidateAddress';
 
 @Component({
   selector: 'app-checkout',
@@ -35,6 +36,7 @@ export class CheckoutComponent implements OnInit {
   showAddressForm = false;
   editingAddressId: string | null = null;
   addressData = { nif: 0, street: '', postal_code: '', city: '' };
+  addressUser!: Address;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,64 +52,68 @@ export class CheckoutComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  this.titleService.setTitle('Perfil');
-  const idTemp = this.route.snapshot.params['userId'];
+    this.titleService.setTitle('Perfil');
+    const idTemp = this.route.snapshot.params['userId'];
 
-  this.userRest.getUser(idTemp).subscribe({
-    next: (dadosUser: User) => {
-      this.user = dadosUser;
+    this.userRest.getUser(idTemp).subscribe({
+      next: (dadosUser: User) => {
+        this.user = dadosUser;
 
-      // Verifica se o utilizador tem um carrinho e se tem itens
-      if (this.user.cart && this.user.cart.itens[0]) {
-        const restId = this.user.cart.itens[0].from;
+        // Verifica se o utilizador tem um carrinho e se tem itens
+        if (this.user.cart && this.user.cart.itens[0]) {
+          const restId = this.user.cart.itens[0].from;
 
-        // Verifica se é para criar ordem após pagamento
-        let shouldCreateOrder = false;
-        let checkoutOptions: any = null;
+          // Verifica se é para criar ordem após pagamento
+          let shouldCreateOrder = false;
+          let checkoutOptions: any = null;
 
-        this.route.queryParams.subscribe(params => {
-          const paymentStatus = params['payment'];
-          if (paymentStatus === 'success') {
-            const options = localStorage.getItem('checkoutOptions');
-            if (options) {
-              const { selectedOption, selectedAddressId, cart } = JSON.parse(options);
-              this.selectedOption = selectedOption;
-              this.selectedAddressId = selectedAddressId;
-              if (cart && this.user) this.user.cart = cart;
-              localStorage.removeItem('checkoutOptions');
+          this.route.queryParams.subscribe(params => {
+            const paymentStatus = params['payment'];
+            if (paymentStatus === 'success') {
+              const options = localStorage.getItem('checkoutOptions');
+              if (options) {
+                const { selectedOption, selectedAddressId, cart } = JSON.parse(options);
+                this.selectedOption = selectedOption;
+                this.selectedAddressId = selectedAddressId;
+                if (cart && this.user) this.user.cart = cart;
+                localStorage.removeItem('checkoutOptions');
+              }
+              shouldCreateOrder = true;
+              this.toastService.show('Encomenda realizada com sucesso', 'success');
             }
-            shouldCreateOrder = true;
-          }
-        });
+          });
 
-        this.cartService.getRestaurant(restId).subscribe({
-          next: (restaurant: Restaurant) => {
-            this.restaurant = restaurant;
-            // Só cria a ordem depois de ter o restaurante
-            if (shouldCreateOrder) {
-              this.handleOrderCreation();
-            }
-          },
-          error: (err) => {
-            console.error('Erro ao obter restaurante', err);
-          },
-        });
-      } else {
-        this.restaurant = {} as Restaurant;
-      }
-    },
-    error: (err) => {
-      console.error('Erro a carregar o utilizador', err);
-    },
-  });
-}
+          this.cartService.getRestaurant(restId).subscribe({
+            next: (restaurant: Restaurant) => {
+              this.restaurant = restaurant;
+              // Só cria a ordem depois de ter o restaurante
+              if (shouldCreateOrder) {
+                this.handleOrderCreation();
+              }
+            },
+            error: (err) => {
+              console.error('Erro ao obter restaurante', err);
+            },
+          });
+        } else {
+          this.restaurant = {} as Restaurant;
+        }
+      },
+      error: (err) => {
+        console.error('Erro a carregar o utilizador', err);
+      },
+    });
+  }
 
   goBack() {
     this.location.back();
   }
 
-  selectAddress(addressId: string) {
+  selectAddress(addressId: string, addressUs: AddressOrder) {
     this.selectedAddressId = addressId;
+
+    const address = new Address(addressUs.address.street, addressUs.address.postal_code, addressUs.address.city)
+    this.addressUser = address;
   }
 
   editAddress(address: AddressOrder) {
@@ -191,20 +197,82 @@ export class CheckoutComponent implements OnInit {
   }
 
   goToPayment() {
-    if (this.selectedOption === 'home' && !this.selectedAddressId) {
-      this.toastService.show('Selecione uma morada para prosseguir com a entrega!', 'error');
+    switch(this.selectedOption) {
+      case 'store': {
+        this.continuarPagamento();
+        break;
+      } case 'home': {
+        if (!this.selectedAddressId) {
+          this.toastService.show('Selecione uma morada para prosseguir com a entrega!', 'error');
+          return;
+        }
+
+        const addressRest = this.restaurant?.address;
+        if(!addressRest) {
+          this.toastService.show('O restaurante não tem morada!', 'error');
+          return;
+        }
+
+        const disntaceKm = this.restaurant?.maximumRadiusDelivery;
+
+        if(!disntaceKm) {
+          this.toastService.show('O restaurante ainda não definiy a distancia valida!', 'error');
+          return;
+        }
+
+        this.CheckOutService.validateDeliveryRadius(addressRest, this.addressUser, disntaceKm).subscribe({
+          next: (validate: ValidateRadiusDelivery) => {
+            const distanceKm = validate.distanciaKm;
+            const dentroDoLimite = validate.dentroDoLimite;
+
+            console.log("Limite: ", dentroDoLimite);
+            if(!dentroDoLimite) {
+              this.toastService.show('A sua distancia está fora do rádio do restaurante!', 'error');
+              return;
+            } else {
+              this.continuarPagamento();
+            }
+          },
+          error: (error) => {
+            if (error.status === 400) {
+              this.toastService.show('A sua distancia está fora do rádio do restaurante!', 'error');
+            } else if (error.status === 500) {
+              this.toastService.show('Erro interno do servidor. Tente novamente mais tarde.', 'error');
+            } else {
+              this.toastService.show('Ocorreu um erro inesperado ao calcular a distância!', 'error');
+            }
+          }
+        })
+        break;
+      } default: {
+        this.toastService.show('Tipo de levantamento inválido!', 'error');
+        break;
+      }
+    }
+  }
+
+  private continuarPagamento(): void {
+    const idTemp = this.route.snapshot.params['userId'];
+
+    if (!idTemp) {
+      this.toastService.show('ID do utilizador não encontrado na rota!', 'error');
       return;
     }
-    const idTemp = this.route.snapshot.params['userId'];
-    // Salva também o carrinho no localStorage!
+
+    if (!this.user?.cart || this.user.cart.itens.length === 0) {
+      this.toastService.show('O carrinho está vazio!', 'error');
+      return;
+    }
+
     localStorage.setItem(
       'checkoutOptions',
       JSON.stringify({
         selectedOption: this.selectedOption,
         selectedAddressId: this.selectedAddressId,
-        cart: this.user?.cart // <-- guardar o carrinho!
+        cart: this.user.cart
       })
     );
+
     this.stripeService.redirectToCheckout(idTemp.toString());
   }
 

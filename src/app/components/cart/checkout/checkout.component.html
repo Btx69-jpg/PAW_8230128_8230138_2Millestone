@@ -74,7 +74,7 @@
                           selectedAddressId === address._id,
                         'border-secondary': selectedAddressId !== address._id
                       }"
-                      (click)="selectAddress(address._id)"
+                      (click)="selectAddress(address._id, address)"
                       style="cursor: pointer"
                     >
                       <div class="card-body">
@@ -108,7 +108,7 @@
                             *ngIf="selectedAddressId !== address._id"
                             class="btn btn-link text-danger p-0"
                             (click)="
-                              selectAddress(address._id);
+                              selectAddress(address._id, address);
                               $event.stopPropagation()
                             "
                           >
