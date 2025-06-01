@@ -23,8 +23,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  checkAut(): Observable<AuthCheckResponse> {
-    return this.http.get<AuthCheckResponse>(`${endPoint}/auth`, {withCredentials: true})
+  checkAut(userId: string): Observable<AuthCheckResponse> {
+    return this.http.get<AuthCheckResponse>(`${endPoint}/auth/${userId}`, {withCredentials: true})
     .pipe(
       catchError(() => of({ isAuth: false }))
     );
@@ -33,7 +33,7 @@ export class AuthService {
   checkisDonoOrCliente(): Observable<string> {
     return this.http.get<{ priority: string }>(`${endPoint}/authIsDonoOrCliente`, {withCredentials: true})
     .pipe(
-      map(res => res.priority) // extrai apenas a string
+      map(res => res.priority)
     );
   }
 }
