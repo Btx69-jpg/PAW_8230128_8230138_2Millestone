@@ -79,6 +79,7 @@ export class CheckoutComponent implements OnInit {
                 localStorage.removeItem('checkoutOptions');
               }
               shouldCreateOrder = true;
+              this.toastService.show('Encomenda realizada com sucesso!', 'success');
             }
           });
 
