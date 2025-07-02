@@ -1,9 +1,5 @@
 # PAW823012882301382Millestone
 
-Links to access the repositories for the Project Overview and Backend:
-- Overview: https://github.com/Arturito2005/projetoPAW_overview
-- Backend: https://github.com/Btx69-jpg/Paw_8230127_8230138
-
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
 
 ## Dependencies
@@ -70,3 +66,8 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+##Links
+Links to access the repositories for the Project Overview and Backend:
+- Overview: https://github.com/Arturito2005/projetoPAW_overview
+- Backend: https://github.com/Btx69-jpg/Paw_8230127_8230138
