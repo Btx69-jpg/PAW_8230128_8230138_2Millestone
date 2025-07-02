@@ -1,6 +1,6 @@
 # PAW823012882301382Millestone
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
+This repository contains the frontend of our PAW project, which was generated using Angular CLI version 19.2.9.
 
 ## Dependencies
     ngx-cookie-service 
