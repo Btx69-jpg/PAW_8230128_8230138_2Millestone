@@ -1,73 +1,77 @@
-# PAW823012882301382Millestone
+# PAW_Frontend
 
-This repository contains the frontend of our PAW project, which was generated using Angular CLI version 19.2.9.
+## English
 
-## Dependencies
-    ngx-cookie-service 
-    jwt-decode 
-    stripe-js 
-    socket.io-client 
-    bootstrap 
-    jquery
+### 📌 Introduction
+This repository contains the backend of our website. It is responsible for organizing all controllers, middleware, models, routes and Swagger documentation, encapsulating all business logic, and exposing a REST API to handle HTTP requests, validate data, communicate with the database and send responses to client requests.
 
+---
 
-## Development server
+### 📁 Folder Structure
 
-To start a local development server, run:
+- **public/**: contains all publicly available assets for the frontend.  
+- **src/**: root of the application’s source code.  
+  - **app/**: holds all the artifacts that make up the Angular application:  
+    - **auth/**: contains the `AuthGuard` implementations we created.  
+    - **components/**: contains all UI components that make up our front‑end.  
+    - **environments/**: stores the environment configuration files.  
+    - **models/**: holds all TypeScript data models used in the front‑end.  
+    - **services/**: contains all Service classes.  
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 🛠️ Languages, Tools and Technologies
 
-## Code scaffolding
+#### 💻 Languages
+- **TypeScript**: a superset of JavaScript that adds static typing and object‑oriented features.  
+- **CSS**: stylesheet language used to describe the presentation of HTML documents—controls colors, fonts, spacing, layouts and responsiveness.  
+- **HTML**: standard markup language for creating and structuring web content.  
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+#### 🧰 Tools
+- **Angular CLI**: the command‑line interface for Angular, used to generate, build and test applications.  
+- **Visual Studio Code**: a lightweight, extensible code editor with built‑in debugging, Git support and a rich ecosystem of extensions.  
 
-```bash
-ng generate component component-name
-```
+#### 💡 Technologies / Concepts
+- **Service**: a TypeScript class decorated with `@Injectable()` that encapsulates logic or operations (HTTP calls, state management, utilities) and abstracts implementation details from components, providing a consistent internal API.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+### 🔗 Links
+- **Overview**: https://github.com/Arturito2005/projetoPAW_overview  
+- **Frontend**: https://github.com/Btx69-jpg/PAW_8230128_8230138_2Millestone
 
-## Building
+## Português
 
-To build the project run:
+### 📌 Introdução
+Este repositorio possui backend do nosso webSite, responsável por organizar todos os controllers, middleware, modelos, rotas e documentação swagger, encapsular toda a lógica de negócio do site e expor a nossa REST API que realiza o processamento de requisições HTTP, validação de dados, comunicação com a base de dados e o envio de respostas aos pedidos de clientes.
 
-```bash
-ng build
-```
+---
+### 📁 Estrutura de pastas
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- **public**: pasta que armazena todas as pastas publicas disponiveis no frontend.
+- **src**: raiz do código-fonte da aplicação.
+ -**app**: armazena todos os artefacos que compoêm a aplicação
+  -**auth**: armazena o `AuthGuard` que criamos
+  -**components**: local obde estão todos os componentes que contituem o nosso frontend
+  -**enviroments**: pasta que armazena o ficheiro eniviroment
+  -**model**:  armazena todos as classes TypeScript utilizadas
+  -**services**: local onde são armazenados todos os serviços  
 
-## Running unit tests
+---
+### 🛠️ Linguagens, Ferramentas e Tecnologias
+#### 💻 Linguagens
+- **TypeScirpt**: superconjunto de JavaScript que adiciona tipagem estática e recursos de orientação a objetos
+- **CSS**: linguagem de estilo usada para descrever a apresentação de documentos HTML. Permite controlar cores, fontes, espaçamentos, layouts e responsividade das páginas web.
+- **HTML**: linguagem de marcação padrão usada para criar e estruturar conteúdo na web.  
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+#### 🧰 Ferramentas
+- **Angular**: framework de código‑aberto mantida pela Google para construir aplicações web de página única (SPAs). 
+- **Visual Studio Code**: editor de código leve e extensível, com integração nativa a debuggers, sistemas de versionamento e inúmeros plugins.
 
-```bash
-ng test
-```
+#### 💡 Tecnologias
+- **Service**: classe TypeScript decorada com `@Injectable()` que encapsula lógica ou operações, abstraindo dos componentes os detalhes de implementação para fornecer uma API interna consistente
+---
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-
-## Links
-Links to access the repositories for the Project Overview and Backend:
-- Overview: https://github.com/Arturito2005/projetoPAW_overview
-- Backend: https://github.com/Btx69-jpg/Paw_8230127_8230138
+### 🔗 Links
+- overview: https://github.com/Arturito2005/projetoPAW_overview
+- frontend: https://github.com/Btx69-jpg/PAW_8230128_8230138_2Millestone
