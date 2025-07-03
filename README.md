@@ -31,7 +31,7 @@ This repository contains the backend of our website. It is responsible for organ
 - **Angular CLI**: the command‑line interface for Angular, used to generate, build and test applications.  
 - **Visual Studio Code**: a lightweight, extensible code editor with built‑in debugging, Git support and a rich ecosystem of extensions.  
 
-#### 💡 Technologies / Concepts
+#### 🌐 Technologies / Concepts
 - **Service**: a TypeScript class decorated with `@Injectable()` that encapsulates logic or operations (HTTP calls, state management, utilities) and abstracts implementation details from components, providing a consistent internal API.
 
 ---
@@ -68,7 +68,7 @@ Este repositorio possui backend do nosso webSite, responsável por organizar tod
 - **Angular CLI**: framework de código‑aberto mantida pela Google para construir aplicações web de página única (SPAs). 
 - **Visual Studio Code**: editor de código leve e extensível, com integração nativa a debuggers, sistemas de versionamento e inúmeros plugins.
 
-#### 💡 Tecnologias
+#### 🌐 Tecnologias / Conceitos
 - **Service**: classe TypeScript decorada com `@Injectable()` que encapsula lógica ou operações, abstraindo dos componentes os detalhes de implementação para fornecer uma API interna consistente
 ---
 
