@@ -65,7 +65,7 @@ Este repositorio possui backend do nosso webSite, responsável por organizar tod
 - **HTML**: linguagem de marcação padrão usada para criar e estruturar conteúdo na web.  
 
 #### 🧰 Ferramentas
-- **Angular**: framework de código‑aberto mantida pela Google para construir aplicações web de página única (SPAs). 
+- **Angular CLI**: framework de código‑aberto mantida pela Google para construir aplicações web de página única (SPAs). 
 - **Visual Studio Code**: editor de código leve e extensível, com integração nativa a debuggers, sistemas de versionamento e inúmeros plugins.
 
 #### 💡 Tecnologias
