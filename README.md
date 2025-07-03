@@ -37,8 +37,8 @@ This repository contains the backend of our website. It is responsible for organ
 ---
 
 ### 🔗 Links
-- **Overview**: https://github.com/Arturito2005/projetoPAW_overview  
-- **Frontend**: https://github.com/Btx69-jpg/PAW_8230128_8230138_2Millestone
+- **Overview**: https://github.com/Arturito2005/projetoPAW_overview
+- **Backend**: https://github.com/Btx69-jpg/Paw_8230127_8230138
 
 ## Português
 
@@ -73,5 +73,5 @@ Este repositorio possui backend do nosso webSite, responsável por organizar tod
 ---
 
 ### 🔗 Links
-- overview: https://github.com/Arturito2005/projetoPAW_overview
-- frontend: https://github.com/Btx69-jpg/PAW_8230128_8230138_2Millestone
+- **Overview**: https://github.com/Arturito2005/projetoPAW_overview
+- **Backend**: https://github.com/Btx69-jpg/Paw_8230127_8230138
